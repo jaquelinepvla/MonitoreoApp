@@ -10,26 +10,23 @@ Tambien se pueden crear includes (una carpeta con otros archivos html en dónde 
 {% block content %}
    <h1>Bienvenido a la página de registro</h1>
    <form action= "" method="POST">
-       <!--{{form.nombre(class='form-control')}}-->
-       <label for= "nombre">Nombre </label>
-       <input type="text" name="nombre"/>
-       <!--{{form.email(class='form-control')}}-->
-       <label for= "email">Email </label>
-       <input type="text" name="email"/>
-       <!--{{form.usuario(class='form-control')}}-->
-       <label for= "usuario">Usuario </label>
-       <input type="text" name="usuario"/>
-       <!--{{form.contraseña(class='form-control')}}-->
-       <label for= "contraseña">Contraseña </label>
-       <input type="password" name="contraseña"/>
-       <!--{{form.confirmar(class='form-control')}}-->
-       <label for= "confirmar_contraseña">Confirmar contraseña </label>
-       <input type="password" name="confirmar"/>
-       <!--{{form.enviar(class='btn btn-primary')}}-->
-       <label for= "enviar">Registrarse </label>
-       <input type="submit" name="enviar"/>
-
+       {{form.nombre.label}}
+       {{form.nombre}}
+       
+       {{form.email.label}}
+       {{form.email}}
+       
+       {{form.usuario.label}}
+       {{form.usuario}}
+      
+       {{form.contraseña.label}}
+       {{form.contraseña}}
+    
+       {{form.confirmar.label}}
+       {{form.confirmar}}
+      
+       {{form.enviar}}
+    
    </form>
 
-   
 {% endblock %}
