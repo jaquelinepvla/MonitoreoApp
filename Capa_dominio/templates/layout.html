@@ -1,0 +1,49 @@
+<!--Plantilla maestra para reutilizarse-->
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title%} MonitoreoApp {% endblock %}| MonitoreoApp</title>
+ 
+     
+    </head>
+    <body>
+    
+        <!--Cabecera de la página-->
+
+        <header>
+          
+            <h1>MonitoreoApp</h1>
+            </div>
+        </header>
+<!--menu-->
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Inicio</a>
+
+                </li>
+                   
+            </ul>
+        </nav> 
+      
+
+<!--Aquí se va a cargar el contenido de las paginas que hereden de esta template
+si no aparece el cuadro blanco, cambiar section por div-->
+        <section id="content">   
+
+            <div class="box">
+                
+                {% block content %}
+
+                {% endblock %}
+            </div>
+            
+        </section>
+
+        <hr/>
+        <footer>
+            Monitoreo Remoto 
+        </footer>
+    </body>
+</html>

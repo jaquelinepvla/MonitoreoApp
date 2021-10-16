@@ -1,0 +1,35 @@
+<!--extends sirve para indicar que esta plantilla va a heredar de layout-->
+{% extends 'layout.html' %}
+<!-- Indicamos que title sera el bloque que usara -->
+{% block title %}
+   Inicio
+{% endblock %}
+<!-- Indicamos que content sera el bloque que usara
+Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
+-->
+{% block content %}
+   <h1>Bienvenido a la página de registro</h1>
+   <form action= "" method="POST">
+       <!--{{form.nombre(class='form-control')}}-->
+       <label for= "nombre">Nombre </label>
+       <input type="text" name="nombre"/>
+       <!--{{form.email(class='form-control')}}-->
+       <label for= "email">Email </label>
+       <input type="text" name="email"/>
+       <!--{{form.usuario(class='form-control')}}-->
+       <label for= "usuario">Usuario </label>
+       <input type="text" name="usuario"/>
+       <!--{{form.contraseña(class='form-control')}}-->
+       <label for= "contraseña">Contraseña </label>
+       <input type="password" name="contraseña"/>
+       <!--{{form.confirmar(class='form-control')}}-->
+       <label for= "confirmar_contraseña">Confirmar contraseña </label>
+       <input type="password" name="confirmar"/>
+       <!--{{form.enviar(class='btn btn-primary')}}-->
+       <label for= "enviar">Registrarse </label>
+       <input type="submit" name="enviar"/>
+
+   </form>
+
+   
+{% endblock %}

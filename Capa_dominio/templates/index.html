@@ -1,0 +1,20 @@
+<!--extends sirve para indicar que esta plantilla va a heredar de layout-->
+{% extends 'layout.html' %}
+<!-- Indicamos que title sera el bloque que usara -->
+{% block title %}
+   Inicio
+{% endblock %}
+<!-- Indicamos que content sera el bloque que usara
+Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
+-->
+{% block content %}
+   <h1>Página de Inicio</h1>
+        <ul>
+
+            <li>
+                    <a href="{{ url_for('registrar')}}">Registrarse</a>
+
+            </li>
+        </ul>
+   
+{% endblock %}
