@@ -1,0 +1,38 @@
+<!--extends sirve para indicar que esta plantilla va a heredar de layout-->
+{% extends 'layout.html' %}
+<!-- Indicamos que title sera el bloque que usara -->
+{% block title %}
+   Monitoreo
+{% endblock %}
+<!-- Indicamos que content sera el bloque que usara
+Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
+-->
+{% block content %}
+   <h1>Monitoreo</h1>
+   <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">OXIGENO</th>
+        <th scope="col">TEMPERATURA</th>
+        <th scope="col">FECHA</th>
+        <th scope="col">HORA</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for dato in registro %}
+      <tr>
+        
+        <td>{{dato[0]}}</td>
+        <td>{{dato[1]}}</td>
+        <td>{{dato[2]}}</td>
+        <td>{{dato[3]}}
+        <td>{{dato[4]}}
+        </td>
+      </tr>
+      {% endfor %}
+     
+    </tbody>
+  </table>
+
+{% endblock %}
