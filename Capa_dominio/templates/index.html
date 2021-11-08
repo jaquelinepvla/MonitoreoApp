@@ -8,18 +8,26 @@
 Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
 -->
 {% block content %}
-  <ul>
+  <h1>Acceso</h1>
+  <form action= "" method="POST">
+ 
+    {{form.usuario.label(class="col-sm-2 col-form-label")}}
+    {{form.usuario(class="form-control")}}
+        
+    {{form.contrasena.label(class="col-sm-2 col-form-label")}}
+    {{form.contrasena(class="form-control")}}
+    <br/>
+    {{form.acceder(class="btn btn-primary mb-3")}}
 
-    <li>
-        <a href="{{ url_for('registrar')}}">Registrarse</a>
+    </form> 
+    <ul>
 
-    </li>
-    <li>
-        <a href="{{ url_for('acceder')}}">Acceder</a>
+      <li>
+          <a href="{{ url_for('registrar')}}">Registrarse</a>
+  
+      </li>
+      
+    </ul> 
 
-    </li>
-
-  </ul>
 
 {% endblock %}
-
