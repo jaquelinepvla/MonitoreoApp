@@ -4,16 +4,31 @@ import psycopg2
 from Usuario import registro, acceso
 from Conexion import conectar
 from Monitoreo import actualizacion
-from Notificacion import email_alert
-
-#from Monitoreo import actualizacion
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '\xa6\x8b\xafF\xee\x81\xaa\x0e\xb8/\xd4H\xdb\xff\x9b\x19g+sM\x8dQ\xda\x05'
 
 @app.route("/", methods=['POST', 'GET'])
-def inicio():
-	return render_template('index.html')
+def acceder():
+
+	conn=conectar()
+	cursor = conn.cursor()
+	form = acceso()
+
+	if request.method == 'POST': 
+		usuario = form.usuario.data
+		contrasena = form.contrasena.data
+		consulta = "SELECT*from usuarios where usuario='{0}' and contrasena= '{1}' ".format(usuario, contrasena)
+		cursor.execute(consulta)
+		filas = cursor.fetchone()
+		print(usuario, contrasena)
+		conn.commit()
+		cursor.close()
+		conn.close()
+		if filas is not None:
+			return render_template('Monitoreo.html')
+		print("Acceso incorrecto")
+	return render_template('index.html', form=form)
 
 @app.route('/Registro', methods = ['POST', 'GET'])
 def registrar():
@@ -32,9 +47,9 @@ def registrar():
 		cursor.close()
 		conn.close()
 	
-		return render_template('Index.html', form=form)
+		return render_template('index.html', form=form)
 	return render_template('Registro.html', form=form)
-
+'''
 @app.route('/Acceso', methods = ['POST', 'GET'])
 def acceder():
 
@@ -49,24 +64,21 @@ def acceder():
 		cursor.execute(consulta)
 		filas = cursor.fetchone()
 		print(usuario, contrasena)
-
-		if filas is not None:
-			return render_template('Monitoreo.html', form=form)
-		print("Acceso incorrecto")
-
 		conn.commit()
 		cursor.close()
 		conn.close()
-		
-	return render_template('Acceso.html', form=form)
+		if filas is not None:
+			return render_template('Monitoreo.html')
+		print("Acceso incorrecto")
+	return render_template('Acceso.html', form=form)'''
 
-@app.route('/Monitoreo/')
-def Monitoreo():
+@app.route('/Monitoreo/',  methods=['POST', 'GET'])
+def monitoreo():
 	registro = actualizacion()
 	return render_template('Monitoreo.html', registro=registro)
 
 
-email_alert("Hey", "Hello world", "jaquelinepvla@gmail.com")		
+	
 	
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
