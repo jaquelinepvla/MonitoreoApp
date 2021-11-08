@@ -63,7 +63,7 @@ def actualizacion():
     cursor.close()
     con.close()
     print (registro)
-    time.sleep(5)
+    #time.sleep(5)
     return registro
     
     #https://es.stackoverflow.com/questions/369312/python-ejecutar-script-cada-cierto-tiempo-y-al-mismo-tiempo-ejecutar-lo-que-qued?rq=1
