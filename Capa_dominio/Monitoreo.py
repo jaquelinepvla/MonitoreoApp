@@ -6,21 +6,27 @@ import socket
 import time
 import threading
 
-PORT = 9999
-HOST = socket.gethostbyname(socket.gethostname())
-print(HOST)
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-ADDR = (HOST, PORT)
-FORMAT = 'utf-8'
 
 def recibir_datos():
-    server.listen()
+    PORT = 8085
+    HOST ='127.0.0.1'
+    #HOST = socket.gethostbyname(socket.gethostname())
+    print(HOST)
+    #AF_NET: para enviar información por la web  SOCK_STREM: TCP
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    ADDR = (HOST, PORT)
+    FORMAT = 'utf-8'
+    #SE ENVÍA UNA TUPLA CON EL HOST Y PORT PARA VINCULARSE
+    server.bind((HOST, PORT)) 
+    server.listen(5)
+    #server es el socket para iniciar la comunicacion y commucation socket es el socket de comunicación
+    #se espera por una conexión, cuando una conexion ocurre almacena el addres del servidor y luego 
+    #almacena el objeto actual que nos permite enviar info de regreso a esa conexión   
+    communication_socket, addres = server.accept()
+    print(f"Conectado a {addres}")
+    #server.bind((ADDR))
     #connected = True
     while True:
-        #se espera por una conexión, cuando una conexion ocurre almacena el addres del servidor y luego 
-        #almacena el objeto actual que nos permite enviar info de regreso a esa conexión   
-        communication_socket, addres = server.accept()
-        print(f"Conectao a {addres}")
         #se reciben los datos, estableciendo el tamaño y el formato.
         data = communication_socket.recv(1024).decode(FORMAT)
         print(f"El mensaje del cliente es:  {data}")
@@ -32,12 +38,12 @@ def recibir_datos():
     #js = json.loads(c.decode('utf-8'))
    
 
-def almacenamiento():  
-    data=recibir_datos()
-    oxigeno = data['oxigeno']
-    temperatura = data['temperatura']
-    fecha = data['fecha']
-    hora = data['hora']
+def almacenamiento(datos):  
+    data=datos
+    oxigeno = data["oxigeno"]
+    temperatura = data["temperatura"]
+    fecha = data["fecha"]
+    hora = data["hora"]
     print(oxigeno, temperatura, fecha, hora)
 
     #Iniciar conexión con la base de datos
@@ -53,7 +59,6 @@ def almacenamiento():
     con.close()
 
 def actualizacion():
-    
     con = conectar()
     cursor = con.cursor() 
     consulta = "SELECT * from parametros order by id desc limit 3;"
@@ -63,10 +68,9 @@ def actualizacion():
     cursor.close()
     con.close()
     print (registro)
-    #time.sleep(5)
+    #time.sleep(300)
     return registro
-    
-    #https://es.stackoverflow.com/questions/369312/python-ejecutar-script-cada-cierto-tiempo-y-al-mismo-tiempo-ejecutar-lo-que-qued?rq=1
+
 
 
    

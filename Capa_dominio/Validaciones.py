@@ -4,10 +4,7 @@ from wtforms import validators
 from wtforms.validators import InputRequired, DataRequired, Email, Length, EqualTo
 import email_validator
 
-
-
-
-class registro(FlaskForm):
+class registro_val(FlaskForm):
     nombre = StringField('Nombre', validators= [InputRequired('Favor de insertar su nombre completo'), Length(min=5, max=50)])
     email = StringField('Email', validators=[InputRequired(), Email('Favor de incertar un correo valido'), Length(min=5, max=20)])
     usuario = StringField('Nombre de usuario', validators=[InputRequired('Favor de insertar un nombre de usuario valido'), Length(min=5, max=20)])
@@ -15,10 +12,9 @@ class registro(FlaskForm):
     enviar = SubmitField('Registrarse')
 
 
-class acceso(FlaskForm):
+class acceso_val(FlaskForm):
     usuario = StringField('Nombre de usuario', validators=[InputRequired('Favor de insertar un nombre de usuario valido'), Length(min=5, max=20)])
     contrasena = PasswordField('contraseña', validators =[InputRequired(), Length(min=5, max=20)])
     #recordarme= BooleanField('Recordarme')
     acceder = SubmitField('Acceder')
-        
         

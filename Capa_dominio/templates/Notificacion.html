@@ -1,0 +1,55 @@
+<!--extends sirve para indicar que esta plantilla va a heredar de layout-->
+{% extends 'layout.html' %}
+<!-- Indicamos que title sera el bloque que usara -->
+{% block title %}
+   Notificaciones
+{% endblock %}
+<!-- Indicamos que content sera el bloque que usara
+Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
+-->
+{% block Menu %}
+  <nav class="navbar navbar-light bg-light fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">MonitoreoApp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('monitoreo')}}">Monitoreo</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('notificar')}}">Notificaciones</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('acceder')}}">Salir</a>
+              </li>
+              
+            </ul>
+            
+          </div>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+<br> <br> <br>
+  <CENTER>
+    <h1>
+      Notificaciones
+    </h1> 
+    {{notifcacion}}
+
+  </CENTER>
+
+      
+ 
+{% endblock %}
