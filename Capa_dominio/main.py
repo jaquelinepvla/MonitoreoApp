@@ -1,16 +1,33 @@
+
 from flask import Flask, request, render_template
 from flask import redirect, url_for
 from Notificacion import detectar_condicion
-from Monitoreo import recibir_datos, actualizacion, almacenamiento
+from Monitoreo import actualizacion, almacenamiento
 from Validaciones import acceso_val, registro_val
 from Conexion import conectar
+from flask_socketio import SocketIO
 import json
-	
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '\xa6\x8b\xafF\xee\x81\xaa\x0e\xb8/\xd4H\xdb\xff\x9b\x19g+sM\x8dQ\xda\x05'
+socketio = SocketIO(app)
 
+@socketio.on('connect')
+def connect():
+	print('connected')
 
+@socketio.on('my event')
+def handle_json(js):
+	print('received json: ', str(js))
+	datos= json.loads(js)
+	print(datos)
+	almacenamiento(datos)
+	print(detectar_condicion(datos))
+
+@socketio.on('disconnect')
+def disconnect():
+    print('Client disconnected')
+	
 
 @app.route("/", methods=['POST', 'GET'])
 def acceder():
@@ -32,32 +49,37 @@ def acceder():
 			return redirect(url_for('monitoreo'))
 		print("Acceso incorrecto")
 	return render_template('index.html', form=form)
-js=recibir_datos()
-datos=json.loads(js)
-print(type(datos))
-almacenamiento(datos)
-notificar=detectar_condicion(datos)
 
 @app.route('/Registro', methods = ['POST', 'GET'])
 def registrar():
 	form = registro_val()
 	if request.method == 'POST':
 		nombre = form.nombre.data
-		email = form.email.data
-		usuario = form.usuario.data
+		email = form.email.data.lower()
+		usuario = form.usuario.data.lower()
 		contrasena = form.contrasena.data
 		print(nombre, email, usuario, contrasena)
 		
 		conn = conectar()
 		cursor= conn.cursor()
-		cursor.execute("INSERT INTO usuarios (email, nombre, usuario, contrasena) VALUES('{0}', '{1}', '{2}', '{3}')".format(email, nombre, usuario, contrasena))
-		conn.commit()
-		cursor.close()
-		conn.close()
+		consulta1 = "INSERT INTO usuarios (email, nombre, usuario, contrasena) VALUES('{0}', '{1}', '{2}', '{3}')".format(email, nombre, usuario, contrasena)
+		consulta2 = "SELECT * from usuarios where email='{0}'or usuario='{1}' ".format(email, usuario)
+		cursor.execute(consulta2)
+		filas = cursor.fetchone()
+		print(filas)
+		
+		if filas is None:
+			cursor.execute(consulta1)
+			conn.commit()
+			cursor.close()
+			conn.close()
+			
+			return redirect(url_for('acceder'))
+		else: 
+			print ('El nombre de usuario o el email ya se han registrado')
+			return render_template('Registro.html', form=form)
 	
-		return redirect(url_for('acceder'))
 	return render_template('Registro.html', form=form)
-
 
 
 @app.route('/Monitoreo/',  methods=['POST', 'GET'])
@@ -66,20 +88,12 @@ def monitoreo():
 	return render_template('Monitoreo.html', registro=registro)
 
 
-@app.route('/Notificaciones/',  methods=['POST', 'GET'])
-def notificar():
-	alertas=notificar
-	return render_template('Notificacion.html', notifcacion=alertas)
-
-js=recibir_datos()
-datos=json.loads(js)
-print(type(datos))
-almacenamiento(datos)
-notificar=detectar_condicion(datos)
+@app.route('/Prediccion/',  methods=['POST', 'GET'])
+def predecir():
+	return render_template('Prediccion.html')
 
 
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
-    app.run(debug=True)
-
-
+	 socketio.run(app, host="192.168.0.10", port=8000, debug=True)
+    #app.run(debug=True)

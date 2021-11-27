@@ -1,5 +1,5 @@
 from Conexion import conectar
-from Monitoreo import actualizacion
+
 def consulta_email():  
     #Iniciar conexión con la base de datos
     con = conectar()
@@ -17,21 +17,20 @@ def consulta_email():
     return consulta
 
 def detectar_condicion(datos):
-    resultado=[]
+    resultado=['¡Se han detectado valores fuera de rango!'] 
     d=datos
     oxigeno = d["oxigeno"]
     temperatura = d['temperatura']
     fecha = d["fecha"]
     hora = d["hora"]
-
     if oxigeno<3 or oxigeno>8:
-        print(f"Se han detectado valores fuera de rango. Oxigeno: {oxigeno, fecha, hora} ")
-        resultado.append(f"Se han detectado valores fuera de rango. Oxigeno: {oxigeno, fecha, hora} ")
+        
+        resultado.append(f"Oxigeno: {oxigeno}, 'Fecha:' {fecha}, 'Hora:'{hora} ")
     else:
         print("El oxigeno se encuentra en condiciones normales")
     if  temperatura<29 or temperatura>32:
-        print(f"Se han detectado valores fuera de rango. Temperatura: {temperatura, fecha, hora} ") 
-        resultado.append(f"Se han detectado valores fuera de rango. Temperatura: {temperatura, fecha, hora} ")
+        
+        resultado.append(f" Temperatura: {temperatura}, 'Fecha:' {fecha}, 'Hora:' {hora} ")
     else:
         print("La temperatura se encuentra en condiciones normales")
     return resultado

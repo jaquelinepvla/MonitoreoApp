@@ -28,11 +28,13 @@ Tambien se pueden crear includes (una carpeta con otros archivos html en dónde 
               <a class="nav-link" href="{{ url_for('monitoreo')}}">Monitoreo</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('notificar')}}">Notificaciones</a>
+              <a class="nav-link" href="{{url_for('predecir')}}">Prediccion</a>
             </li>
+           
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{{ url_for('acceder')}}">Salir</a>
             </li>
+            
             
           </ul>
           
@@ -71,5 +73,8 @@ Tambien se pueden crear includes (una carpeta con otros archivos html en dónde 
      
     </tbody>
   </table>
+<!-------------------------------------------------socketio----------------------------------------------------->
+
+
 
 {% endblock %}
