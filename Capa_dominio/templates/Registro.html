@@ -8,8 +8,8 @@
 Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
 -->
 {% block content %}
-   <h1>Registro</h1>
-   <form action= "" method="POST">
+  <CENTER> <h1>Registro</h1>
+   <form action= "" method="POST" style="width: 50%;">
        {{form.nombre.label(class="col-sm-2 col-form-label")}}
        {{form.nombre(class="form-control")}}
        
@@ -24,6 +24,6 @@ Tambien se pueden crear includes (una carpeta con otros archivos html en dónde 
        <br/>
        {{form.enviar(class="btn btn-primary mb-3")}}
     
-   </form>
+   </form></CENTER>
 
 {% endblock %}

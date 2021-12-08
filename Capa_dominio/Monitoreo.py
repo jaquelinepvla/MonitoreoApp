@@ -3,12 +3,12 @@ from Conexion import conectar
 
 def almacenamiento(datos):  
     data=datos
-    oxigeno = data["oxigeno"]
-    temperatura = data["temperatura"]
-    fecha = data["fecha"]
-    hora = data["hora"]
+    oxigeno = data["O"]
+    temperatura = data["T"]
+    fecha = data["F"]
+    hora = data["H"]
     print(oxigeno, temperatura, fecha, hora)
-
+    
     #Iniciar conexión con la base de datos
     con = conectar()
     cursor = con.cursor() 
@@ -22,6 +22,7 @@ def almacenamiento(datos):
     con.close()
 
 def actualizacion():
+    
     con = conectar()
     cursor = con.cursor() 
     consulta = "SELECT * from parametros order by id desc limit 10;"
@@ -31,8 +32,6 @@ def actualizacion():
     cursor.close()
     con.close()
     return registro
-
-
 
    
     
