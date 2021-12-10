@@ -22,6 +22,7 @@ mail= Mail(app)
 
 socketio = SocketIO(app)
 
+
 @socketio.on('connect')
 def connect():
 	print('connected')
@@ -39,10 +40,12 @@ def mensaje(resultado):
 	
 	print(len(resultado))
 	if len(resultado) > 0: 
+		r=str(resultado).replace('[','').replace(']','').replace('{','').replace('}','').replace("'",'')
+		print(r)
 		with mail.connect() as conn:
 			subj = "Alerta"
 			msg = Message(recipients=consulta_email(),  subject=subj)
-			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br>{resultado}<br><b>Consulta mas información en: http://192.168.0.10:8000. <br>No es necesario responder este mensaje</b>')
+			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="http://192.168.0.10:8000">aquí. </A>')
 			conn.send(msg) 
 
 @socketio.on('disconnect')
@@ -85,9 +88,11 @@ def registrar():
 	
 	return render_template('Registro.html', form=form)
 
+#variable registro
+registro = actualizacion()
+
 @app.route('/Monitoreo/',  methods=['POST', 'GET'])
 def monitoreo():
-	registro = actualizacion()
 	return render_template('Monitoreo.html', registro=registro)
 
 @app.route('/datos/', methods=['POST', 'GET'])
@@ -97,17 +102,13 @@ def graficar():
 	t = []
 	h = []
 	f=[]
-	datos = actualizacion()
-	print(type(datos[0]))
-	for dato in datos:
+	#datos = actualizacion()
+	
+	for dato in registro:
 		o.append(dato[1])
 		t.append(dato[2])
 		h.append(dato[4].strftime('%H:%M:%S'))
-		f.append(dato[3].strftime('%d/%m/%Y'))
-	print(h)
-	print(f)
-	
-		
+		f.append(dato[3].strftime('%d/%m/%Y'))	
 	data = {
 	"oxigeno": o,
 	"temperatura": t,
