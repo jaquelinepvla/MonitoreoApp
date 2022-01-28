@@ -3,10 +3,10 @@ from Conexion import conectar
 
 def almacenamiento(datos):  
     data=datos
-    oxigeno = data["O"]
     temperatura = data["T"]
+    oxigeno = data["O"]
     fecha = data["F"]
-    hora = data["H"]
+    hora = data["H"].replace('.','').replace(' ','')
     print(oxigeno, temperatura, fecha, hora)
     
     #Iniciar conexión con la base de datos

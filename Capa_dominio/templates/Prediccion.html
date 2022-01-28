@@ -1,0 +1,125 @@
+<!--extends sirve para indicar que esta plantilla va a heredar de layout-->
+{% extends 'layout.html' %}
+<!-- Indicamos que title sera el bloque que usara -->
+{% block title %}
+   Notificaciones
+{% endblock %}
+<!-- Indicamos que content sera el bloque que usara
+Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
+-->
+{% block Menu %}
+<nav class="navbar navbar-light bg-light fixed-top">
+  <div class="container-fluid" style="background-color: rgb(98, 0, 255);">
+    <a class="navbar-brand" style="color: rgb(239, 243, 245); font-weight: bold;" href="#">MonitoreoApp </a>
+<!-----------------------------------------Botón de menu desplegable---------------------------------------------------------------------------------->
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" style="background-color:  rgb(98, 0, 255);">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+<!-----------------------------------------Cotenido del menu------------------------------------------------------------------------------------------>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: white;">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="color:blue ;">Menu</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('monitoreo')}}" style="color: black;">Monitoreo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('predecir')}}" style="color: black;">Prediccion</a>
+          </li>
+         
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('acceder')}}" style="color: black;">Salir</a>
+          </li>
+          
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" type="text/javascript" >
+setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</script>
+<br> <br> <br>
+  <CENTER>
+    <h1>
+      Predicciones
+    </h1> 
+    {{notifcacion}}
+
+  </CENTER>
+  <!-------------------------------------------------Graficos---------------------------------------------------->
+
+<canvas id= "myChart" width="260" height="120"></canvas>
+<script>
+  var data = $.get('/predecir/');
+  //Cargo los datos en una variable
+  var tm = data.done(function (resp) {
+  //Uso los datos 
+  var Xhr=resp['hora']
+  var Yoxig = resp['oxigeno']
+  var Ytemp = resp['temperatura']
+  console.log("JSON DATA", Ytemp);
+
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: Xhr,
+        datasets: [{
+            label: 'temperatura °C',
+            data: Ytemp,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            tension: 0.4,
+            yAxisID: 'y'
+        },{label: 'Oxigeno mg/L',
+            data: Yoxig,
+            backgroundColor: 'rgba(0, 26, 104, 0.2)',
+            borderColor: 'rgba(0, 26, 104, 1)',
+            tension: 0.4,
+            yAxisID: 'o'
+          }]
+    },
+    options: {
+        layout:{
+          padding:{
+            bottom: 30,
+            right: 200,
+            left: 200,
+            top:100
+            
+          }
+          
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                type: 'linear',
+                position: 'left'
+            },
+            o:{
+              beginAtZero: true,
+                type: 'linear',
+                position: 'right',
+                grid:{
+                  drawOnChartArea: false
+
+                }
+
+            }
+        }
+    }
+});
+})  
+</script>
+
+ 
+{% endblock %}

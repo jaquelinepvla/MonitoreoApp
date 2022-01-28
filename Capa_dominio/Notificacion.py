@@ -19,19 +19,20 @@ def consulta_email():
 def detectar_condicion(datos):
     resultado=[]
     d=datos
-    oxigeno = d["oxigeno"]
-    temperatura = d['temperatura']
-    fecha = d["fecha"]
-    hora = d["hora"]
+    oxigeno = d["O"]
+    temperatura = d['T']
+    fecha = d["F"]
+    hora = d["H"]
     if oxigeno<3 or oxigeno>8:
         resultado.append({'Oxígeno': oxigeno, 'Fecha': fecha, 'Hora':hora} )
     else:
         print("El oxigeno se encuentra en condiciones normales")
     if  temperatura<29 or temperatura>32:
         
-        resultado.append({'Temperatura': temperatura, 'Fecha': fecha, 'Hora':hora})
+        resultado.append({'\nTemperatura': temperatura, 'Fecha': fecha, 'Hora':hora})
     else:
         print("La temperatura se encuentra en condiciones normales")
+
 
     return resultado
 

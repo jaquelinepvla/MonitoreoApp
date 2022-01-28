@@ -1,6 +1,8 @@
 
 from flask import Flask, request, render_template
 from flask import redirect, url_for
+from Prediccion import actualizacion_prediccion
+from Prediccion import prediccion_temp
 from Usuarios import Usuario
 from Notificacion import detectar_condicion, consulta_email
 from Monitoreo import actualizacion, almacenamiento
@@ -34,18 +36,21 @@ def handle_json(js):
 	print(datos)
 	almacenamiento(datos)
 	resultado= detectar_condicion(datos)
+	prediccion_temp()
 	mensaje(resultado)
+
+	
 
 def mensaje(resultado):
 	
-	print(len(resultado))
+	#print(len(resultado))
 	if len(resultado) > 0: 
 		r=str(resultado).replace('[','').replace(']','').replace('{','').replace('}','').replace("'",'')
 		print(r)
 		with mail.connect() as conn:
 			subj = "Alerta"
 			msg = Message(recipients=consulta_email(),  subject=subj)
-			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="http://192.168.0.10:8000">aquí. </A>')
+			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="http://192.168.1.16:8000">aquí. </A>')
 			conn.send(msg) 
 
 @socketio.on('disconnect')
@@ -89,15 +94,16 @@ def registrar():
 	return render_template('Registro.html', form=form)
 
 #variable registro
-registro = actualizacion()
+
 
 @app.route('/Monitoreo/',  methods=['POST', 'GET'])
 def monitoreo():
+	registro = actualizacion()
 	return render_template('Monitoreo.html', registro=registro)
 
 @app.route('/datos/', methods=['POST', 'GET'])
 def graficar():
-	
+	registro = actualizacion()
 	o =[]
 	t = []
 	h = []
@@ -115,13 +121,38 @@ def graficar():
 	"hora": h,
 	"fecha": f
     }
+	#prediccion_temp()
 	return data
 
 @app.route('/Prediccion/',  methods=['POST', 'GET'])
 def predecir():
 	return render_template('Prediccion.html')
+
+@app.route('/predecir/', methods=['POST', 'GET'])
+def graficar_prediccion():
+	registro = actualizacion_prediccion()
+	o =[]
+	t = []
+	h = []
+	f=[]
+	#datos = actualizacion()
+	
+	for dato in registro:
+		o.append(dato[1])
+		t.append(dato[2])
+		h.append(dato[4].strftime('%H:%M:%S'))
+		f.append(dato[3].strftime('%d/%m/%Y'))	
+	data = {
+	"oxigeno": o,
+	"temperatura": t,
+	"hora": h,
+	"fecha": f
+    }
+	#prediccion_temp()
+	return data
 	
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
-	 socketio.run(app, host="192.168.0.10", port=8000, debug=True)
+	 socketio.run(app, host="192.168.1.16", port=8000, debug=True)
     #app.run(debug=True)
+
