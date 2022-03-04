@@ -1,6 +1,9 @@
-
+import email
+import numpy as np
 from flask import Flask, request, render_template
-from flask import redirect, url_for
+from flask import redirect, url_for, flash
+#from Usuarios import get_by_id
+from Validaciones import contrasena_val, email_val
 from Prediccion import actualizacion_prediccion
 from Prediccion import prediccion_temp
 from Usuarios import Usuario
@@ -10,6 +13,8 @@ from Validaciones import acceso_val, registro_val
 from flask_socketio import SocketIO
 from flask_mail import Mail, Message
 import json
+#from flask_login import LoginManager, login_user, logout_user, login_required
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '\xa6\x8b\xafF\xee\x81\xaa\x0e\xb8/\xd4H\xdb\xff\x9b\x19g+sM\x8dQ\xda\x05'
@@ -21,9 +26,8 @@ app.config['MAIL_DEFAULT_SENDER']= 'monitoreoapp.service@gmail.com'
 app.config['MAIL_USE_TLS']=True
 
 mail= Mail(app)
-
+#login_manager_app=LoginManager(app)
 socketio = SocketIO(app)
-
 
 @socketio.on('connect')
 def connect():
@@ -50,12 +54,24 @@ def mensaje(resultado):
 		with mail.connect() as conn:
 			subj = "Alerta"
 			msg = Message(recipients=consulta_email(),  subject=subj)
-			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="http://192.168.1.16:8000">aquí. </A>')
+			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="http://192.168.1.11:8000/">aquí.</A>')
 			conn.send(msg) 
+
+def mensaje_contrasena(destinatario):
+
+	with mail.connect() as conn:
+		subj = "Restablecer contraseña"
+		msg = Message(recipients=destinatario,  subject=subj)
+		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="http://192.168.1.11:8000/Restablecer_contrasena">aquí </A>para continuar.')
+		conn.send(msg)
 
 @socketio.on('disconnect')
 def disconnect():
     print('Client disconnected')
+''' 
+@login_manager_app.user_loader
+def load_user(id):
+	return get_by_id(id)'''
 	
 @app.route("/", methods=['POST', 'GET'])
 def acceder():
@@ -65,11 +81,15 @@ def acceder():
 	if request.method == 'POST': 
 		usuario = form.usuario.data
 		contrasena = form.contrasena.data
-		u = Usuario('', '', usuario, contrasena)
+		u = Usuario('','', '', usuario, contrasena)
 		acceso = u.acceso()
-		if acceso == True:
+		#user=u.get_id()
+		#print (user)
+		if  acceso == True:
+			#login_user(u)
 			return redirect(url_for('monitoreo'))
 		else: print('Acceso incorrecto')
+		flash('¡Acceso incorrecto! verifique que le usuario y la contraseña coincidan')
 	
 	return render_template('index.html', form=form)
 
@@ -82,18 +102,50 @@ def registrar():
 		usuario = form.usuario.data.lower()
 		contrasena = form.contrasena.data
 		
-		u = Usuario(nombre, email, usuario, contrasena)
+		u = Usuario('', nombre, email, usuario, contrasena)
 		registro = u.registro()
 		
 		if registro == True:
 			return redirect(url_for('acceder'))
 		else:
 			print ('El nombre de usuario o el email ya se han registrado')
+			flash('El nombre de usuario o email ya han sido registrados')
 			return render_template('Registro.html', form=form)
 	
 	return render_template('Registro.html', form=form)
 
-#variable registro
+@app.route('/Restablecer_contrasena', methods = ['POST', 'GET'])
+def formulario_contrasena():
+	form = contrasena_val()
+	if request.method =='POST':
+		email= form.email.data
+		contrasena=form.contrasena.data
+		nueva_contrasena = form.confirmacion.data
+		if nueva_contrasena == contrasena:
+			u=Usuario('', '', email, '', contrasena)
+			u.actualizar_contrasena()
+			flash('La contraseña fue restablecida')
+			return redirect(url_for('acceder'))
+		else: 
+			flash('Las contraseñas no coinciden')
+	return render_template('Restablecer_contrasena.html', form=form)
+
+@app.route('/Cambio_de_contraseña', methods = ['POST', 'GET'])
+def restablecer_contrasena():
+	form = email_val()
+	if request.method =='POST':
+		destinatario=[]
+		email= form.email.data
+		u=Usuario('', '', email, '', '')
+		destinatario.append(email)
+		print(destinatario)
+	
+		if u.verificar_email():
+			mensaje_contrasena(destinatario)
+			flash('Se ha enviado un mensaje a tu correo electronico con el link para restablecer la contraseña')
+		else:
+			flash('El correo proporcionado no se encuentra registrado en el sistema')
+	return render_template('Cambio_de_contraseña.html', form=form)	
 
 
 @app.route('/Monitoreo/',  methods=['POST', 'GET'])
@@ -101,32 +153,41 @@ def monitoreo():
 	registro = actualizacion()
 	return render_template('Monitoreo.html', registro=registro)
 
+@app.route('/Prediccion/',  methods=['POST', 'GET'])
+def predecir():
+	registro = actualizacion_prediccion()
+	return render_template('Prediccion.html', registro= registro)
+
 @app.route('/datos/', methods=['POST', 'GET'])
 def graficar():
 	registro = actualizacion()
+	print(registro)
 	o =[]
 	t = []
 	h = []
 	f=[]
-	#datos = actualizacion()
-	
+
 	for dato in registro:
 		o.append(dato[1])
 		t.append(dato[2])
 		h.append(dato[4].strftime('%H:%M:%S'))
 		f.append(dato[3].strftime('%d/%m/%Y'))	
+	#Ordenar arreglos de forma ascendente 
+	print(o, t)
+	o_reverse= o[::-1]
+	t_reverse= t[::-1]
+	h_reverse= h[::-1]
+	
 	data = {
-	"oxigeno": o,
-	"temperatura": t,
-	"hora": h,
+	"oxigeno": o_reverse,
+	"temperatura": t_reverse,
+	"hora": h_reverse,
 	"fecha": f
     }
 	#prediccion_temp()
 	return data
 
-@app.route('/Prediccion/',  methods=['POST', 'GET'])
-def predecir():
-	return render_template('Prediccion.html')
+
 
 @app.route('/predecir/', methods=['POST', 'GET'])
 def graficar_prediccion():
@@ -141,18 +202,22 @@ def graficar_prediccion():
 		o.append(dato[1])
 		t.append(dato[2])
 		h.append(dato[4].strftime('%H:%M:%S'))
-		f.append(dato[3].strftime('%d/%m/%Y'))	
+		f.append(dato[3].strftime('%d/%m/%Y'))
+	o_reverse= o[::-1]
+	t_reverse= t[::-1]
+	h_reverse= h[::-1]	
 	data = {
-	"oxigeno": o,
-	"temperatura": t,
-	"hora": h,
+	"oxigeno": o_reverse,
+	"temperatura": t_reverse,
+	"hora": h_reverse,
 	"fecha": f
     }
 	#prediccion_temp()
 	return data
+
 	
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
-	 socketio.run(app, host="192.168.1.16", port=8000, debug=True)
+	 socketio.run(app, host="192.168.1.11", port=8000, debug=True)
     #app.run(debug=True)
 

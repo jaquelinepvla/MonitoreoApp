@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,10 +16,23 @@
    <!---------jquery----------->
    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <body>
+  </head>
+ 
 
-    <section>
-      <section id="Menu">
+  <body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+            {%endfor%}
+          {%endif%}
+        {%endwith%}
+        </div>
+      
+
+    <section id="Menu">
         <div class="box">
           {% block Menu %}
 
@@ -26,11 +40,11 @@
       </div>
     </section>
 
-    <section id="content">
+    <section id="content_tabla" >
       
 
         <div class="box">
-            {% block content %}
+            {% block content_tabla %}
 
 
             {% endblock %}
@@ -38,9 +52,21 @@
         
     </section>
 
+    <section id="content_graficos">
+      
+
+      <div class="box">
+          {% block content_graficos %}
+
+
+          {% endblock %}
+      </div>
+      
+  </section>
+
    
-    <footer style=" background-color: #cf39d4">
-        <CENTER>Monitoreo Remoto</CENTER> 
+    <footer>
+        <CENTER> Monitoreo Remoto </CENTER> 
     </footer>
 
     <!-- Optional JavaScript; choose one of the two! -->

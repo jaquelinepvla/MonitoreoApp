@@ -9,16 +9,16 @@ Tambien se pueden crear includes (una carpeta con otros archivos html en dónde 
 -->
 {% block Menu %}
 <nav class="navbar navbar-light bg-light fixed-top">
-  <div class="container-fluid" style="background-color: rgb(98, 0, 255);">
-    <a class="navbar-brand" style="color: rgb(239, 243, 245); font-weight: bold;" href="#">MonitoreoApp </a>
+  <div class="container-fluid">
+    <a class="navbar-brand" style="color: white;" href="#">MonitoreoApp </a>
 <!-----------------------------------------Botón de menu desplegable---------------------------------------------------------------------------------->
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" style="background-color:  rgb(98, 0, 255);">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" >
       <span class="navbar-toggler-icon"></span>
     </button>
 <!-----------------------------------------Cotenido del menu------------------------------------------------------------------------------------------>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: white;">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="color:blue ;">Menu</h5>
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="color:#284469 ;">Menu</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
@@ -44,18 +44,50 @@ Tambien se pueden crear includes (una carpeta con otros archivos html en dónde 
 </nav>
 {% endblock %}
 
-{% block content %}
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" type="text/javascript" >
-setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</script>
+{% block content_tabla %}
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" type="text/javascript" >
+setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</script>--->
 <br> <br> <br>
   <CENTER>
-    <h1>
-      Predicciones
-    </h1> 
-    {{notifcacion}}
+  
+    <CENTER><h1 style="font-size: 20px;">Prediccion de los parámetros de calidad</h1></CENTER>
+    <br><br>
+    <!----------------------------------Tabla----------------------------------------------------------->
+    <div class="table-responsive"></div>
+       <CENTER><table class="table" id="tabla-datos" style="width: 65%; height: 45; font-size: 15px; border-color: black;" ></CENTER>
+        <thead style="background-color: #cf39d4; color: white;">
+          <tr>
+            
+            <th scope="col">Oxígeno (mg/L)</th>
+            <th scope="col">Temperatura (°C)</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+         <tr>
+          
+            {%for dato in registro %}
+              <td>{{dato[1]}}</td>
+              <td>{{dato[2]}}</td>
+              <td>{{dato[3]}}</td>
+              <td>{{dato[4]}}</td>
+            
+          </tr> 
+          
+          {% endfor %}
+       
+         
+        </tbody>
+      </table>
+    </div>
 
   </CENTER>
+  {% endblock %}
   <!-------------------------------------------------Graficos---------------------------------------------------->
+  {% block content_graficos %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" type="text/javascript" >
+setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</script>
 
 <canvas id= "myChart" width="260" height="120"></canvas>
 <script>
