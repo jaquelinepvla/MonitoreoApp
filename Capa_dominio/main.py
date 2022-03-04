@@ -130,7 +130,7 @@ def formulario_contrasena():
 			flash('Las contraseñas no coinciden')
 	return render_template('Restablecer_contrasena.html', form=form)
 
-@app.route('/Cambio_de_contraseña', methods = ['POST', 'GET'])
+@app.route('/Cambio_de_contrasena', methods = ['POST', 'GET'])
 def restablecer_contrasena():
 	form = email_val()
 	if request.method =='POST':
@@ -145,7 +145,7 @@ def restablecer_contrasena():
 			flash('Se ha enviado un mensaje a tu correo electronico con el link para restablecer la contraseña')
 		else:
 			flash('El correo proporcionado no se encuentra registrado en el sistema')
-	return render_template('Cambio_de_contraseña.html', form=form)	
+	return render_template('Cambio_de_contrasena.html', form=form)	
 
 
 @app.route('/Monitoreo/',  methods=['POST', 'GET'])
