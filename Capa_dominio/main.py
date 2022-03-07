@@ -62,7 +62,7 @@ def mensaje_contrasena(destinatario):
 	with mail.connect() as conn:
 		subj = "Restablecer contraseña"
 		msg = Message(recipients=destinatario,  subject=subj)
-		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="http://192.168.1.11:8000/Restablecer_contrasena">aquí </A>para continuar.')
+		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="http://192.168.42.62:8000/Restablecer_contrasena">aquí </A>para continuar.')
 		conn.send(msg)
 
 @socketio.on('disconnect')
@@ -218,6 +218,6 @@ def graficar_prediccion():
 	
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
-	 socketio.run(app, host="192.168.1.11", port=8000, debug=True)
+	 socketio.run(app, host="192.168.42.62", port=8000, debug=True)
     #app.run(debug=True)
 

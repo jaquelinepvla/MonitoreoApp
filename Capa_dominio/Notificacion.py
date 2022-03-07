@@ -29,7 +29,7 @@ def detectar_condicion(datos):
         print("El oxigeno se encuentra en condiciones normales")
     if  temperatura<29 or temperatura>32:
         
-        resultado.append({'\nTemperatura': temperatura, 'Fecha': fecha, 'Hora':hora})
+        resultado.append({'Temperatura': temperatura, 'Fecha': fecha, 'Hora':hora})
     else:
         print("La temperatura se encuentra en condiciones normales")
 
