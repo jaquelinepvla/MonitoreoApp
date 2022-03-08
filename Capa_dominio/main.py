@@ -218,6 +218,6 @@ def graficar_prediccion():
 	
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
-	 socketio.run(app, host="192.168.1.11", port=8000, debug=True)
+	 socketio.run(app, host="192.168.1.13", port=8000, debug=True)
     #app.run(debug=True)
 
