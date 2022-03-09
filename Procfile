@@ -1,1 +1,1 @@
-web: gunicorn app:main
+web: gunicorn --chdir ./Capa_dominio app:app
