@@ -1,1 +1,1 @@
-web: gunicorn app:./Capa_dominio/app
+web: gunicorn app:main
