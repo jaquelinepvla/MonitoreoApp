@@ -52,7 +52,7 @@ def mensaje(resultado):
 		with mail.connect() as conn:
 			subj = "Alerta"
 			msg = Message(recipients=consulta_email(),  subject=subj)
-			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="http://192.168.1.11:8000/">aquí.</A>')
+			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="http://192.168.1.13:8000/">aquí.</A>')
 			conn.send(msg) 
 
 def mensaje_contrasena(destinatario):
@@ -60,7 +60,7 @@ def mensaje_contrasena(destinatario):
 	with mail.connect() as conn:
 		subj = "Restablecer contraseña"
 		msg = Message(recipients=destinatario,  subject=subj)
-		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="http://192.168.1.11:8000/Restablecer_contrasena">aquí </A>para continuar.')
+		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="http://192.168.1.13:8000/Restablecer_contrasena">aquí </A>para continuar.')
 		conn.send(msg)
 
 @socketio.on('disconnect')
@@ -140,7 +140,7 @@ def restablecer_contrasena():
 	
 		if u.verificar_email():
 			mensaje_contrasena(destinatario)
-			flash('Se ha enviado un mensaje a tu correo electronico con el link para restablecer la contraseña')
+			flash('Se ha enviado un mensaje a tu correo electrónico con el link para restablecer la contraseña')
 		else:
 			flash('El correo proporcionado no se encuentra registrado en el sistema')
 	return render_template('Cambio_de_contrasena.html', form=form)	
