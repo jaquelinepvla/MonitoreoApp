@@ -2,7 +2,7 @@
 {% extends 'layout.html' %}
 <!-- Indicamos que title sera el bloque que usara -->
 {% block title %}
-   Notificaciones
+   Predicción
 {% endblock %}
 <!-- Indicamos que content sera el bloque que usara
 Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
@@ -44,6 +44,9 @@ Tambien se pueden crear includes (una carpeta con otros archivos html en dónde 
 </nav>
 {% endblock %}
 
+{%block logo%}
+{%endblock%}
+
 {% block content_tabla %}
 <!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" type="text/javascript" >
 setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</script>--->
@@ -55,7 +58,7 @@ setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</scr
     <!----------------------------------Tabla----------------------------------------------------------->
     <div class="table-responsive"></div>
        <CENTER><table class="table" id="tabla-datos" style="width: 65%; height: 45; font-size: 15px; border-color: black;" ></CENTER>
-        <thead style="background-color: #cf39d4; color: white;">
+        <thead style="background-color: #b6b9ff; color: white;">
           <tr>
             
             <th scope="col">Oxígeno (mg/L)</th>
@@ -153,5 +156,4 @@ const myChart = new Chart(ctx, {
 })  
 </script>
 
- 
 {% endblock %}

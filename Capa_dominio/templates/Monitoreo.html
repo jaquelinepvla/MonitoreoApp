@@ -8,48 +8,52 @@
 
 {% block Menu %}
 <!-----------------------------------------Barra de navegación--------------------------------------------------------------------------------------->
+<header class="header">  
   <nav class="navbar navbar-light bg-light fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" style="color: white;" href="#">MonitoreoApp </a>
-<!-----------------------------------------Botón de menu desplegable---------------------------------------------------------------------------------->
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-<!-----------------------------------------Cotenido del menu------------------------------------------------------------------------------------------>
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: white;">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="color:#284469 ;">Menu</h5>
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('monitoreo')}}" style="color: black;">Monitoreo</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{url_for('predecir')}}" style="color: black;">Prediccion</a>
-            </li>
-           
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{{ url_for('acceder')}}" style="color: black;">Salir</a>
-            </li>
+   
+        <a class="navbar-brand" style="color: white;" href="#">MonitoreoApp </a>
+  <!-----------------------------------------Botón de menu desplegable---------------------------------------------------------------------------------->
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  <!-----------------------------------------Cotenido del menu------------------------------------------------------------------------------------------>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: white;">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="color:#284469 ;">Menu</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('monitoreo')}}" style="color: black;">Monitoreo</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('predecir')}}" style="color: black;">Prediccion</a>
+              </li>
             
-          </ul>
-          
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('acceder')}}" style="color: black;">Salir</a>
+              </li>
+              
+              
+            </ul>
+            
+          </div>
         </div>
-      </div>
     </div>
-  </nav>
+    </nav>
+  </header>
 {% endblock %}
+
+{% block logo %}
+{%endblock%}
 
 {% block content_tabla %}
 <!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" type="text/javascript" >
 setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</script>--->
 
-
- 
 
 <br><br><br>
    <CENTER><h1 style="font-size: 20px;">Estado de los parámetros de calidad</h1></CENTER>
@@ -57,7 +61,7 @@ setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</scr
 <!----------------------------------Tabla----------------------------------------------------------->
 <div class="table-responsive"></div>
    <CENTER><table class="table" id="tabla-datos" style="width: 65%; height: 45; font-size: 15px; border-color: black;" ></CENTER>
-    <thead style="background-color: #cf39d4; color: white;">
+    <thead style="background-color: rgb(230, 230, 230); color: black;">
       <tr>
         
         <th scope="col">Oxígeno (mg/L)</th>
@@ -76,10 +80,8 @@ setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</scr
           <td>{{dato[4]}}</td>
         
       </tr> 
-      
       {% endfor %}
    
-     
     </tbody>
   </table>
 </div>
