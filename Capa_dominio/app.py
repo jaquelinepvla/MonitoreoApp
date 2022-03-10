@@ -1,4 +1,4 @@
-''' import email
+import email
 import numpy as np
 from flask import Flask, request, render_template
 from flask import redirect, url_for, flash
@@ -65,12 +65,12 @@ def mensaje_contrasena(destinatario):
 
 @socketio.on('disconnect')
 def disconnect():
-    print('Client disconnected')'''
+    print('Client disconnected')
 ''' 
 @login_manager_app.user_loader
 def load_user(id):
 	return get_by_id(id)'''
-''' 	
+
 @app.route("/", methods=['POST', 'GET'])
 def acceder():
 	
@@ -214,8 +214,8 @@ def graficar_prediccion():
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
 	 socketio.run(app, host="192.168.28.186", port=8000, debug=True)
-    #app.run(debug=True)''' 
-
+    #app.run(debug=True)
+'''
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -225,4 +225,4 @@ def home():
     return 'Ok'
 
 if __name__ == "__main__":
-    app.run()
+    app.run()'''
