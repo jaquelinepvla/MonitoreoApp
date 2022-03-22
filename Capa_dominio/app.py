@@ -73,9 +73,10 @@ def load_user(id):
 
 
 @app.route("/hola", methods=['POST', 'GET'])
-def prueba(msg):
+def prueba():
+	msg = request.get_json()
 	print(msg)
-	return "hola mundo, "+ msg
+	return "todo correcto"
 
 @app.route("/", methods=['POST', 'GET'])
 def acceder():
