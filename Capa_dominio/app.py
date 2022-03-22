@@ -52,7 +52,7 @@ def mensaje(resultado):
 		with mail.connect() as conn:
 			subj = "Alerta"
 			msg = Message(recipients=consulta_email(),  subject=subj)
-			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="http://192.168.1.13:8000/">aquí.</A>')
+			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="https://iotacuicola.herokuapp.com/">aquí.</A>')
 			conn.send(msg) 
 
 def mensaje_contrasena(destinatario):
@@ -60,7 +60,7 @@ def mensaje_contrasena(destinatario):
 	with mail.connect() as conn:
 		subj = "Restablecer contraseña"
 		msg = Message(recipients=destinatario,  subject=subj)
-		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="http://192.168.1.13:8000/Restablecer_contrasena">aquí </A>para continuar.')
+		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="https://iotacuicola.herokuapp.com//Restablecer_contrasena">aquí </A>para continuar.')
 		conn.send(msg)
 
 @socketio.on('disconnect')
@@ -70,7 +70,10 @@ def disconnect():
 @login_manager_app.user_loader
 def load_user(id):
 	return get_by_id(id)'''
-
+@app.route("/hola", methods=['POST', 'GET'])
+def prueba():
+	return "hola mundo"
+	
 @app.route("/", methods=['POST', 'GET'])
 def acceder():
 	
