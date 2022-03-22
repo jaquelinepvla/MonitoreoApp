@@ -73,7 +73,7 @@ def load_user(id):
 @app.route("/hola", methods=['POST', 'GET'])
 def prueba():
 	return "hola mundo"
-	
+
 @app.route("/", methods=['POST', 'GET'])
 def acceder():
 	
@@ -216,8 +216,8 @@ def graficar_prediccion():
 
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
-	 socketio.run(app, host="https://iotacuicola.herokuapp.com", port=8000, debug=True)
-    #app.run(debug=True)
+	#socketio.run(app, host="https://iotacuicola.herokuapp.com", port=8000, debug=True)
+    app.run(debug=True, port=8000)
 '''
 from flask import Flask, request
 
