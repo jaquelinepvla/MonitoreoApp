@@ -70,9 +70,12 @@ def disconnect():
 @login_manager_app.user_loader
 def load_user(id):
 	return get_by_id(id)'''
+
+
 @app.route("/hola", methods=['POST', 'GET'])
-def prueba():
-	return "hola mundo"
+def prueba(msg):
+	print(msg)
+	return "hola mundo, "+ msg
 
 @app.route("/", methods=['POST', 'GET'])
 def acceder():
