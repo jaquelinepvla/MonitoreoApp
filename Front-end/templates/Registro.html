@@ -1,0 +1,35 @@
+<!--extends sirve para indicar que esta plantilla va a heredar de layout-->
+{% extends 'layout.html' %}
+<!-- Indicamos que title sera el bloque que usara -->
+{% block title %}
+   Inicio
+{% endblock %}
+<!-- Indicamos que content sera el bloque que usara
+Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
+-->
+{%block logo%}
+   <CENTER>MonitoreoApp</CENTER>
+{%endblock%}
+
+{% block content_tabla %}
+<CENTER>
+   <form action= "" method="POST" class="formularios">
+    <h3 class="display-5 text-center"  style="color: rgb(0, 0, 0); font-weight: bold; font-size: 18pt;">Crear cuenta</h3>
+       {{form.nombre.label(class="col-sm-2 col-form-label")}}
+       {{form.nombre(class="form-control")}}
+    
+       {{form.email.label(class="col-sm-2 col-form-label")}}
+       {{form.email(class="form-control")}}
+   
+       
+       {{form.usuario.label(class="col-sm-2 col-form-label")}}
+       {{form.usuario(class="form-control")}}
+      
+       {{form.contrasena.label(class="col-sm-2 col-form-label")}}
+       {{form.contrasena(class="form-control")}}
+       <br/>
+      {{form.enviar(class="btn btn-primary mb-3", style="font-weight: bold;")}}
+
+   </form></CENTER>
+
+{% endblock %}
