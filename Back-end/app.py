@@ -1,6 +1,6 @@
 import email
 import numpy as np
-from flask import Flask, request, render_template
+from flask import Flask, jsonify, request, render_template
 from flask import redirect, url_for, flash
 #from Usuarios import get_by_id
 from Validaciones import contrasena_val, email_val
@@ -13,10 +13,12 @@ from Validaciones import acceso_val, registro_val
 from flask_socketio import SocketIO
 from flask_mail import Mail, Message
 import json
+from flask_cors import CORS, cross_origin
 #from flask_login import LoginManager, login_user, logout_user, login_required
 
 
 app = Flask(__name__)
+CORS(app)
 app.config['SECRET_KEY'] = '\xa6\x8b\xafF\xee\x81\xaa\x0e\xb8/\xd4H\xdb\xff\x9b\x19g+sM\x8dQ\xda\x05'
 app.config['MAIL_SERVER']= 'smtp.gmail.com'
 app.config['MAIL_PORT']=587
@@ -24,7 +26,7 @@ app.config['MAIL_USERNAME']='monitoreoapp.service@gmail.com'
 app.config['MAIL_PASSWORD']='udkqdqvpwtxnvdcz'
 app.config['MAIL_DEFAULT_SENDER']= 'monitoreoapp.service@gmail.com'
 app.config['MAIL_USE_TLS']=True
-
+'''
 mail= Mail(app)
 #login_manager_app=LoginManager(app)
 socketio = SocketIO(app)
@@ -65,13 +67,13 @@ def mensaje_contrasena(destinatario):
 
 @socketio.on('disconnect')
 def disconnect():
-    print('Client disconnected')
+    print('Client disconnected')'''
 ''' 
 @login_manager_app.user_loader
 def load_user(id):
 	return get_by_id(id)'''
 
-
+'''
 @app.route("/hola", methods=['POST', 'GET'])
 def prueba():
 	msg = request.get_json()
@@ -100,7 +102,7 @@ def acceder():
 		else: print('Acceso incorrecto')
 		flash('¡Acceso incorrecto! verifique que el usuario y la contraseña coincidan')
 	
-	return render_template('Front-end\templates\index.html', form=form)
+	return render_template('\index.html', form=form)
 
 @app.route('/Registro', methods = ['POST', 'GET'])
 def registrar():
@@ -160,50 +162,62 @@ def restablecer_contrasena():
 @app.route('/Monitoreo/',  methods=['POST', 'GET'])
 def monitoreo():
 	registro = actualizacion()
-	return render_template('Monitoreo.html', registro=registro)
+	return render_template('Monitoreo.html', registro=registro)'''
 
+#================== Rutas Datos ==========================
+@cross_origin
 @app.route('/Prediccion/',  methods=['POST', 'GET'])
 def predecir():
 	registro = actualizacion_prediccion()
-	return render_template('Prediccion.html', registro= registro)
+	js=[]
+	for dato in registro:
+		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[4].strftime('%H:%M:%S'), 't':dato[3].strftime('%d/%m/%Y')})
 
-@app.route('/datos/', methods=['POST', 'GET'])
+	return jsonify(js)
+
+@cross_origin
+@app.route('/', methods=['POST', 'GET'])
 def graficar():
 	registro = actualizacion()
-	print(registro)
+	js=[]
+	for dato in registro:
+		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[4].strftime('%H:%M:%S'), 't':dato[3].strftime('%d/%m/%Y')})
+
+	return jsonify(js)
+
+cross_origin
+@app.route('/Grafica/', methods=['POST', 'GET'])
+def graficar_monitoreo():
+	registro = actualizacion()
 	o =[]
 	t = []
 	h = []
 	f=[]
-
 	for dato in registro:
 		o.append(dato[1])
 		t.append(dato[2])
 		h.append(dato[4].strftime('%H:%M:%S'))
-		f.append(dato[3].strftime('%d/%m/%Y'))	
-	#Ordenar arreglos de forma ascendente 
-	print(o, t)
+		f.append(dato[3].strftime('%d/%m/%Y'))
 	o_reverse= o[::-1]
 	t_reverse= t[::-1]
-	h_reverse= h[::-1]
-	
+	h_reverse= h[::-1]	
 	data = {
 	"oxigeno": o_reverse,
 	"temperatura": t_reverse,
 	"hora": h_reverse,
 	"fecha": f
     }
-	#prediccion_temp()
 	return data
 
-@app.route('/predecir/', methods=['POST', 'GET'])
+	
+@cross_origin
+@app.route('/Prediccion_grafica/', methods=['POST', 'GET'])
 def graficar_prediccion():
 	registro = actualizacion_prediccion()
 	o =[]
 	t = []
 	h = []
 	f=[]
-	#datos = actualizacion()
 	
 	for dato in registro:
 		o.append(dato[1])
@@ -219,21 +233,9 @@ def graficar_prediccion():
 	"hora": h_reverse,
 	"fecha": f
     }
-	#prediccion_temp()
 	return data
 
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
 	#socketio.run(app, host="https://iotacuicola.herokuapp.com", port=8000, debug=True)
     app.run(debug=True, port=8000)
-'''
-from flask import Flask, request
-
-app = Flask(__name__)
-
-@app.route("/")
-def home():
-    return 'Ok'
-
-if __name__ == "__main__":
-    app.run()'''
