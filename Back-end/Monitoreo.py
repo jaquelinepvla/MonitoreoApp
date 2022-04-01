@@ -2,7 +2,10 @@
 from Conexion import conectar
 
 def almacenamiento(datos):  
+
     data=datos
+    print(data)
+''' 
     temperatura = data["T"]
     oxigeno = data["O"]
     fecha = data["F"]
@@ -19,7 +22,7 @@ def almacenamiento(datos):
     con.commit()
     #Cerrar cursor y conexión
     cursor.close()
-    con.close()
+    con.close()'''
 
 def actualizacion():
     

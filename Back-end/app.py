@@ -26,8 +26,32 @@ app.config['MAIL_USERNAME']='monitoreoapp.service@gmail.com'
 app.config['MAIL_PASSWORD']='udkqdqvpwtxnvdcz'
 app.config['MAIL_DEFAULT_SENDER']= 'monitoreoapp.service@gmail.com'
 app.config['MAIL_USE_TLS']=True
-'''
+
+#========================Correos de notificación================================
 mail= Mail(app)
+
+def mensaje(resultado):
+	
+	#print(len(resultado))
+	if len(resultado) > 0: 
+		r=str(resultado).replace('[','').replace(']','').replace('{','').replace('}','').replace("'",'')
+		print(r)
+		with mail.connect() as conn:
+			subj = "Alerta"
+			msg = Message(recipients=consulta_email(),  subject=subj)
+			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="https://iotacuicola.herokuapp.com/">aquí.</A>')
+			conn.send(msg) 
+			
+def mensaje_contrasena(destinatario):
+
+	with mail.connect() as conn:
+		subj = "Restablecer contraseña"
+		msg = Message(recipients=destinatario,  subject=subj)
+		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="https://iotacuicola.herokuapp.com//Restablecer_contrasena">aquí </A>para continuar.')
+		conn.send(msg)
+
+
+'''
 #login_manager_app=LoginManager(app)
 socketio = SocketIO(app)
 
@@ -45,25 +69,9 @@ def handle_json(js):
 	prediccion_temp()
 	mensaje(resultado)
 
-def mensaje(resultado):
-	
-	#print(len(resultado))
-	if len(resultado) > 0: 
-		r=str(resultado).replace('[','').replace(']','').replace('{','').replace('}','').replace("'",'')
-		print(r)
-		with mail.connect() as conn:
-			subj = "Alerta"
-			msg = Message(recipients=consulta_email(),  subject=subj)
-			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="https://iotacuicola.herokuapp.com/">aquí.</A>')
-			conn.send(msg) 
 
-def mensaje_contrasena(destinatario):
 
-	with mail.connect() as conn:
-		subj = "Restablecer contraseña"
-		msg = Message(recipients=destinatario,  subject=subj)
-		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="https://iotacuicola.herokuapp.com//Restablecer_contrasena">aquí </A>para continuar.')
-		conn.send(msg)
+
 
 @socketio.on('disconnect')
 def disconnect():
@@ -164,7 +172,7 @@ def monitoreo():
 	registro = actualizacion()
 	return render_template('Monitoreo.html', registro=registro)'''
 
-#================== Rutas Datos ==========================
+#========================Rutas Datos ==========================
 @cross_origin
 @app.route('/Prediccion/',  methods=['POST', 'GET'])
 def predecir():
@@ -178,6 +186,13 @@ def predecir():
 @cross_origin
 @app.route('/', methods=['POST', 'GET'])
 def graficar():
+	#msg=[]
+	msg = request.get_json()
+	print(msg)
+	almacenamiento(msg)
+	#resultado= detectar_condicion(msg)
+	#prediccion_temp()
+	#mensaje(resultado)
 	registro = actualizacion()
 	js=[]
 	for dato in registro:
@@ -234,6 +249,8 @@ def graficar_prediccion():
 	"fecha": f
     }
 	return data
+
+
 
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
