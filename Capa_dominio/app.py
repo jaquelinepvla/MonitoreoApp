@@ -74,12 +74,13 @@ def load_user(id):
 
 @app.route("/hola", methods=['POST', 'GET'])
 def prueba():
+	msg = []
 	msg = request.get_json()
 	print(msg)
-	almacenamiento(msg)
-	resultado= detectar_condicion(msg)
-	prediccion_temp()
-	mensaje(resultado)
+	#almacenamiento(msg)
+	#resultado= detectar_condicion(msg)
+	#prediccion_temp()
+	#mensaje(resultado)
 	return "todo correcto"
 
 @app.route("/", methods=['POST', 'GET'])

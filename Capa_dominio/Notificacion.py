@@ -20,7 +20,7 @@ def detectar_condicion(datos):
     resultado=[]
     d=datos
     oxigeno = d["O"]
-    temperatura = d['T']
+    temperatura = d["T"]
     fecha = d["F"]
     hora = d["H"]
     if oxigeno<3 or oxigeno>8:
