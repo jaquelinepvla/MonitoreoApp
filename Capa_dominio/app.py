@@ -75,7 +75,7 @@ def load_user(id):
 @app.route("/hola", methods=['POST', 'GET'])
 def prueba():
 	msg = []
-	msg = request.get_json()
+	msg = request
 	print(msg)
 	#almacenamiento(msg)
 	#resultado= detectar_condicion(msg)
