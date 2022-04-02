@@ -74,7 +74,7 @@ def load_user(id):
 
 @app.route("/hola", methods=['POST', 'GET'])
 def prueba():
-	msg = []
+	
 	msg = request.get_data()
 	js = json.loads(msg)
 	print(js)
