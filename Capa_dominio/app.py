@@ -76,7 +76,8 @@ def load_user(id):
 def prueba():
 	msg = []
 	msg = request.get_data()
-	print(msg)
+	js = json.loads(msg)
+	print(js)
 	#almacenamiento(msg)
 	#resultado= detectar_condicion(msg)
 	#prediccion_temp()
