@@ -76,11 +76,13 @@ def load_user(id):
 def prueba():
 	
 	msg = request.get_data()
-	data = msg
-	js = json.loads(data.decode("utf-8"))
-	print(msg, type(js))
-	almacenamiento(js)
-	resultado= detectar_condicion(js)
+	#data = msg
+	js = json.loads(msg.decode("utf-8"))
+	print(js, type(js))
+	for dato in js:
+		almacenamiento(dato)
+		resultado= detectar_condicion(dato)
+
 	prediccion_temp()
 	mensaje(resultado)
 	return "todo correcto"
