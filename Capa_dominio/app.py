@@ -81,9 +81,9 @@ def prueba():
 	#print(js, type(js))
 	for dato in js:
 		print(dato, type(dato))
-		#almacenamiento(dato)
-		#resultado = detectar_condicion(dato)
-		#mensaje(resultado)
+		almacenamiento(dato)
+		resultado = detectar_condicion(dato)
+		mensaje(resultado)
 
 	prediccion_temp()
 	
