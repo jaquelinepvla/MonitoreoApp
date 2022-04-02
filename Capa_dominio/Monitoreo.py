@@ -1,5 +1,10 @@
 
 from Conexion import conectar
+''' def ordenar(datos):
+    d_f = sorted(datos, key="F")
+    d_h = sorted(d_f, key="H")
+    return d_h'''
+
 
 def almacenamiento(datos):  
     data=datos
