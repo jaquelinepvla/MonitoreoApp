@@ -76,7 +76,8 @@ def load_user(id):
 def prueba():
 	
 	msg = request.get_data()
-	js = json.loads(msg)
+	data = msg.read()
+	js = json.loads(data.decode("utf-8"))
 	print(js)
 	#almacenamiento(msg)
 	#resultado= detectar_condicion(msg)
