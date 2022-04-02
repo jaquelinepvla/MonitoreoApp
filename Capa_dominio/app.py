@@ -81,10 +81,11 @@ def prueba():
 	print(js, type(js))
 	for dato in js:
 		almacenamiento(dato)
-		resultado= detectar_condicion(dato)
+		resultado = detectar_condicion(dato)
+		mensaje(resultado)
 
 	prediccion_temp()
-	mensaje(resultado)
+	
 	return "todo correcto"
 
 @app.route("/", methods=['POST', 'GET'])
