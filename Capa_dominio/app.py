@@ -1,3 +1,4 @@
+import datetime
 import email
 import numpy as np
 from flask import Flask, request, render_template
@@ -186,19 +187,21 @@ def graficar():
 	for dato in registro:
 		o.append(dato[1])
 		t.append(dato[2])
-		h.append(dato[4].strftime('%H:%M:%S'))
-		f.append(dato[3].strftime('%d/%m/%Y'))	
+		#f.append(datetime.strptime(dato[4], "%H:%M:%S"))
+		#h.append(dato[4].strftime('%H:%M:%S'))
+		f.append(dato[3].strftime("%m/%d/%Y, %H:%M:%S"))
 	#Ordenar arreglos de forma ascendente 
 	print(o, t)
 	o_reverse= o[::-1]
 	t_reverse= t[::-1]
-	h_reverse= h[::-1]
+	f_reverse= f[::-1]
 	
 	data = {
 	"oxigeno": o_reverse,
 	"temperatura": t_reverse,
-	"hora": h_reverse,
-	"fecha": f
+	"tiempo": f_reverse
+	#"hora": h_reverse,
+	#"fecha": f
     }
 	#prediccion_temp()
 	return data
@@ -215,16 +218,19 @@ def graficar_prediccion():
 	for dato in registro:
 		o.append(dato[1])
 		t.append(dato[2])
-		h.append(dato[4].strftime('%H:%M:%S'))
-		f.append(dato[3].strftime('%d/%m/%Y'))
+		dato[3] = datetime.time.strftime("%H:%M:%S")
+		f.append(dato[4])
+		#h.append(dato[4].strftime('%H:%M:%S'))
+		#f.append(dato[3].strftime('%d/%m/%Y'))
 	o_reverse= o[::-1]
 	t_reverse= t[::-1]
-	h_reverse= h[::-1]	
+	f_reverse= f[::-1]	
 	data = {
 	"oxigeno": o_reverse,
 	"temperatura": t_reverse,
-	"hora": h_reverse,
-	"fecha": f
+	"tiempo": f_reverse
+	#"hora": h_reverse,
+	#"fecha": f
     }
 	#prediccion_temp()
 	return data

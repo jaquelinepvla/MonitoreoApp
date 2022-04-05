@@ -66,8 +66,9 @@ setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</scr
         
         <th scope="col">Oxígeno (mg/L)</th>
         <th scope="col">Temperatura (°C)</th>
-        <th scope="col">Fecha</th>
-        <th scope="col">Hora</th>
+        <th scope="col">Tiempo (°C)</th>
+        <!--<th scope="col">Fecha</th>
+        <th scope="col">Hora</th>-->
       </tr>
     </thead>
     <tbody>
@@ -77,7 +78,7 @@ setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</scr
           <td>{{dato[1]}}</td>
           <td>{{dato[2]}}</td>
           <td>{{dato[3]}}</td>
-          <td>{{dato[4]}}</td>
+         <!-- <td>{{dato[4]}}</td>--> 
         
       </tr> 
       {% endfor %}
@@ -98,7 +99,7 @@ setTimeout(function() {$('#tabla-datos').DataTable().ajax.reload();}, 3000)</scr
   //Cargo los datos en una variable
   var tm = data.done(function (resp) {
   //Uso los datos 
-  var Xhr=resp['hora']
+  var Xhr=resp['tiempo']
   var Yoxig = resp['oxigeno']
   var Ytemp = resp['temperatura']
   console.log("JSON DATA", Ytemp);

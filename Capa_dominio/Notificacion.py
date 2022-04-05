@@ -21,15 +21,16 @@ def detectar_condicion(datos):
     d=datos
     oxigeno = d["O"]
     temperatura = d["T"]
-    fecha = d["F"]
-    hora = d["H"]
+    tiempo = d["F"]  + ' ' + d["H"]
+    #fecha = d["F"]
+    #hora = d["H"]
     if oxigeno<3 or oxigeno>8:
-        resultado.append({'Oxígeno': oxigeno, 'Fecha': fecha, 'Hora':hora} )
+        resultado.append({'Oxígeno': oxigeno, 'Fecha': tiempo} )
     else:
         print("El oxigeno se encuentra en condiciones normales")
     if  temperatura<29 or temperatura>32:
         
-        resultado.append({'Temperatura': temperatura, 'Fecha': fecha, 'Hora':hora})
+        resultado.append({'Temperatura': temperatura, 'Fecha': tiempo})
     else:
         print("La temperatura se encuentra en condiciones normales")
 

@@ -10,15 +10,16 @@ def almacenamiento(datos):
     data=datos
     temperatura = data["T"]
     oxigeno = data["O"]
-    fecha = data["F"]
-    hora = data["H"].replace('.','').replace(' ','')
-    print(oxigeno, temperatura, fecha, hora)
+    tiempo = data["F"]  + ' ' + data["H"]
+    #fecha = data["F"]
+    #hora = data["H"].replace('.','').replace(' ','')
+    print(oxigeno, temperatura, tiempo)
     
     #Iniciar conexión con la base de datos
     con = conectar()
     cursor = con.cursor() 
     #Crear y ejecutar consulta
-    consulta = "INSERT INTO parametros(oxigeno, temperatura, fecha, hora) VALUES('{0}', '{1}', '{2}', '{3}')".format(oxigeno, temperatura, fecha, hora) 
+    consulta = "INSERT INTO parametros(oxigeno, temperatura, tiempo) VALUES('{0}', '{1}', '{2}', '{3}')".format(oxigeno, temperatura, tiempo) 
     cursor.execute(consulta)
     #Hacer cambios en la base de datos
     con.commit()
