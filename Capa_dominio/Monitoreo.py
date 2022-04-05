@@ -19,7 +19,7 @@ def almacenamiento(datos):
     con = conectar()
     cursor = con.cursor() 
     #Crear y ejecutar consulta
-    consulta = "INSERT INTO parametros(oxigeno, temperatura, tiempo) VALUES('{0}', '{1}', '{2}', '{3}')".format(oxigeno, temperatura, tiempo) 
+    consulta = "INSERT INTO parametros(oxigeno, temperatura, tiempo) VALUES('{0}', '{1}', '{2}')".format(oxigeno, temperatura, tiempo) 
     cursor.execute(consulta)
     #Hacer cambios en la base de datos
     con.commit()
