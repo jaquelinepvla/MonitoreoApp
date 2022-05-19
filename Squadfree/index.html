@@ -30,7 +30,9 @@
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
  
-  <script src="assets/js/request.js"></script>
+  <script src="assets/js/request.js" defer></script>
+<!-- Chartjs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js" integrity="sha256-D2tkh/3EROq+XuDEmgxOLW1oNxf0rLNlOwsPIUX+co4=" crossorigin="anonymous"></script>
 
   <!-- =======================================================
   * Template Name: Squadfree - v4.7.0
@@ -88,8 +90,23 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero">
     <div class="hero-container" data-aos="fade-up">
-      <h1>Bienvenido a IoT acuicola</h1>
-      <h2>desliza para ver la información del estanque</h2>
+     
+      <div class="container resumen_M">
+        <div class="text">
+          <p id="principal"><strong>Estado actual</strong></p>
+          <p id="fecha_m"></p>
+          <p id="dato_m"></p>
+        </div>
+      </div>
+      <div class="container resumen_P">
+        <div class="text">
+          <p id="principal"><strong>Pronóstico</strong></p>
+          <p id="fecha_p">07:34:00 - 05/16/2022</p>
+          <p id="dato_p">O:8 mg/L   T:25°C</p>
+        </div>
+        
+      </div>
+      
       <a href="#about" class="btn-get-started scrollto"><i class="bx bx-chevrons-down"></i></a>
     </div>
   </section><!-- End Hero -->
@@ -101,27 +118,22 @@
       <div class="container">
         <div class="section-title" data-aos="fade-in" data-aos-delay="100">
           <h2>Estado del estanque</h2>
-          <p>Estado del oxígeno y temperatura del estanque en la última hora.</p>
+          <p>Estado del oxígeno disuelto y temperatura del estanque.</p>
         </div>
-
         <div class="row no-gutters">
-          <div class="content col-xl-6 d-flex align-items-stretch" data-aos="fade-up">
-            <!--<div class="content">-->
+          <div class="content col-xl-3 d-flex align-items-stretch" data-aos="fade-up">
+            <!--<div class="content">
               <div class="table-responsive">
                 <table id = "tablaM" class="table table-dark">
                   <thead>
                     <tr>
                       <th scope="col">O (mg/L)</th>
                       <th scope="col">T (°C)</th>
-                      <th scope="col">Fecha</th>
-                      <th scope="col">Hora</th>
+                      <th scope="col">Tiempo</th> 
                     </tr>
                   </thead>
-
                 </table>
-                
-                </div>    
-              
+                </div>  -->     
             <!--</div>-->
           </div>
           <!--<div class="col-xl-6 d-flex align-items-stretch">
@@ -136,8 +148,8 @@
               </div>
             </div>--- End .content
           </div>-->
-          <div class="content col-xl-6 d-flex align-items-stretch" data-aos="fade-up">
-            <p>Aquí va la grafica</p>
+          <div class="content col-xl-7 d-flex align-items-stretch" data-aos="fade-up">
+            <canvas id="chartM" width="600" height="400"></canvas>
           </div>
         </div>
       </div>
@@ -282,8 +294,8 @@
                     <tr>
                       <th scope="col">O (mg/L)</th>
                       <th scope="col">T (°C)</th>
-                      <th scope="col">Fecha</th>
-                      <th scope="col">Hora</th>
+                      <th scope="col">Tiempo</th>
+                      
                     </tr>
                   </thead>
 
@@ -308,7 +320,7 @@
           <div class="content col-xl-6 d-flex align-items-stretch" data-aos="fade-up">
             <!--<div class="content">-->
               <p>Aquí va la grafica</p>    
-              
+              <canvas id="chart" width="400" height="400"></canvas>
             <!--</div>-->
           </div>
         </div>

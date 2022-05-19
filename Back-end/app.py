@@ -170,7 +170,9 @@ def restablecer_contrasena():
 @app.route('/Monitoreo/',  methods=['POST', 'GET'])
 def monitoreo():
 	registro = actualizacion()
+	//esta authentucado?
 	return render_template('Monitoreo.html', registro=registro)'''
+	
 
 #========================Rutas Datos ==========================
 @cross_origin
@@ -179,7 +181,7 @@ def predecir():
 	registro = actualizacion_prediccion()
 	js=[]
 	for dato in registro:
-		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[4].strftime('%H:%M:%S'), 't':dato[3].strftime('%d/%m/%Y')})
+		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[5]})
 
 	return jsonify(js)
 
@@ -187,16 +189,16 @@ def predecir():
 @app.route('/', methods=['POST', 'GET'])
 def graficar():
 	#msg=[]
-	msg = request.get_json()
-	print(msg)
-	almacenamiento(msg)
+	#msg = request.get_json()
+	#print(msg)
+	#almacenamiento(msg)
 	#resultado= detectar_condicion(msg)
 	#prediccion_temp()
 	#mensaje(resultado)
 	registro = actualizacion()
 	js=[]
 	for dato in registro:
-		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[4].strftime('%H:%M:%S'), 't':dato[3].strftime('%d/%m/%Y')})
+		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[5]})
 
 	return jsonify(js)
 
@@ -204,6 +206,7 @@ cross_origin
 @app.route('/Grafica/', methods=['POST', 'GET'])
 def graficar_monitoreo():
 	registro = actualizacion()
+	print(registro)
 	o =[]
 	t = []
 	h = []
@@ -211,8 +214,8 @@ def graficar_monitoreo():
 	for dato in registro:
 		o.append(dato[1])
 		t.append(dato[2])
-		h.append(dato[4].strftime('%H:%M:%S'))
-		f.append(dato[3].strftime('%d/%m/%Y'))
+		h.append(dato[5].strftime('%H:%M:%S'))
+		f.append(dato[5].strftime('%d/%m/%Y'))
 	o_reverse= o[::-1]
 	t_reverse= t[::-1]
 	h_reverse= h[::-1]	
@@ -222,13 +225,14 @@ def graficar_monitoreo():
 	"hora": h_reverse,
 	"fecha": f
     }
-	return data
+	return jsonify(data)
 
 	
 @cross_origin
 @app.route('/Prediccion_grafica/', methods=['POST', 'GET'])
 def graficar_prediccion():
 	registro = actualizacion_prediccion()
+	
 	o =[]
 	t = []
 	h = []

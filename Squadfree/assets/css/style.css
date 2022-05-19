@@ -302,6 +302,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   margin-bottom: -90px;
 }
+
 #hero .hero-container {
   position: absolute;
   bottom: 0;
@@ -347,6 +348,33 @@ h1, h2, h3, h4, h5, h6 {
 #hero .btn-get-started:hover {
   padding-top: 8px;
   background: rgba(255, 255, 255, 0.15);
+}
+
+.resumen_M{
+  width: 60%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) ;
+  border-radius: 5px;
+  border: solid 1px rgba(255,  255, 255, 0.1)
+
+}
+.text{
+  color: white;
+  opacity: 1;
+  font-size: 25px;
+
+}
+.resumen_P{
+
+  width: 60%;
+  margin-bottom: 2%;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) ;
+  border-radius: 5px;
+  border: solid 1px rgba(255,  255, 255, 0.1)
+
 }
 @media (min-width: 1024px) {
   #hero {
