@@ -44,8 +44,6 @@ def prediccion_temp():
     
     almacear_prediccion(pt, po, str_hp, date.today())
 
-
-
 def extrapolacion(xi, xf, yi, yf):
     di=float(yi[0])
     df=float(yf[0])
