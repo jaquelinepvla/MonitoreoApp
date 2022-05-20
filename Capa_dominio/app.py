@@ -1,7 +1,7 @@
 import datetime
 import email
 import numpy as np
-from flask import Flask, request, render_template
+from flask import Flask, jsonify, request, render_template
 from flask import redirect, url_for, flash
 #from Usuarios import get_by_id
 from Validaciones import contrasena_val, email_val
@@ -163,9 +163,10 @@ def restablecer_contrasena():
 		else:
 			flash('El correo proporcionado no se encuentra registrado en el sistema')
 	return render_template('Cambio_de_contrasena.html', form=form)	
+	
 
 
-@app.route('/Monitoreo/',  methods=['POST', 'GET'])
+'''@app.route('/Monitoreo/',  methods=['POST', 'GET'])
 def monitoreo():
 	registro = actualizacion()
 	return render_template('Monitoreo.html', registro=registro)
@@ -173,39 +174,22 @@ def monitoreo():
 @app.route('/Prediccion/',  methods=['POST', 'GET'])
 def predecir():
 	registro = actualizacion_prediccion()
-	return render_template('Prediccion.html', registro= registro)
+	return render_template('Prediccion.html', registro= registro)'''
 
-@app.route('/datos/', methods=['POST', 'GET'])
-def graficar():
+@app.route('/inicio/', methods=['POST', 'GET'])
+def inicio():
+	return render_template('index.html')
+
+@app.route('/monitoreo/', methods=['POST', 'GET'])
+def graficar_m():
 	registro = actualizacion()
-	print(registro)
-	o =[]
-	t = []
-	h = []
-	f=[]
-
+	js=[]
 	for dato in registro:
-		o.append(dato[1])
-		t.append(dato[2])
-		#f.append(datetime.strptime(dato[4], "%H:%M:%S"))
-		#h.append(dato[4].strftime('%H:%M:%S'))
-		f.append(dato[3].strftime("%m/%d/%Y, %H:%M:%S"))
-	#Ordenar arreglos de forma ascendente 
-	print(o, t)
-	o_reverse= o[::-1]
-	t_reverse= t[::-1]
-	f_reverse= f[::-1]
-	
-	data = {
-	"oxigeno": o_reverse,
-	"temperatura": t_reverse,
-	"tiempo": f_reverse
-	#"hora": h_reverse,
-	#"fecha": f
-    }
-	#prediccion_temp()
-	return data
+		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[5]})
+	d = jsonify(js)
+	return d
 
+'''	
 @app.route('/predecir/', methods=['POST', 'GET'])
 def graficar_prediccion():
 	registro = actualizacion_prediccion()
@@ -233,7 +217,7 @@ def graficar_prediccion():
 	#"fecha": f
     }
 	#prediccion_temp()
-	return data
+	return data'''
 
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
