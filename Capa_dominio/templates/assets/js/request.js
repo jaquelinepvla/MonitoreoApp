@@ -135,7 +135,7 @@ function grficar(){
     });
 }
 
-tablas();
+
 grficar();
 resumenM();
 

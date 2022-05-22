@@ -122,6 +122,7 @@ def restablecer_contrasena():
 	
 @app.route('/inicio/', methods=['POST', 'GET'])
 def inicio():
+	#esta autenticado?
 	return render_template('index.html')
 
 @app.route('/monitoreo/', methods=['POST', 'GET'])
