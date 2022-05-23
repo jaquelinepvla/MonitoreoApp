@@ -61,7 +61,7 @@ def acceder():
 		#print (user)
 		if  acceso == True:
 			#login_user(u)
-			return redirect(url_for('index'))
+			return redirect(url_for('inicio'))
 		else: print('Acceso incorrecto')
 		flash('¡Acceso incorrecto! verifique que el usuario y la contraseña coincidan')
 	
