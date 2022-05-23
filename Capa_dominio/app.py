@@ -27,6 +27,7 @@ app.config['MAIL_USE_TLS']=True
 
 mail= Mail(app)
 #login_manager_app=LoginManager(app)
+acceso=False
 
 #=========================RUTAS=======================================
 @app.route("/hola", methods=['POST', 'GET'])
@@ -65,6 +66,22 @@ def acceder():
 		flash('¡Acceso incorrecto! verifique que el usuario y la contraseña coincidan')
 	
 	return render_template('login.html', form=form)
+
+@app.route('/inicio/', methods=['POST', 'GET'])
+def inicio():
+	if acceso==True:
+		return render_template('index.html')
+	else:
+		return redirect(url_for('acceder'))
+
+@app.route('/monitoreo/', methods=['POST', 'GET'])
+def graficar_m():
+	registro = actualizacion()
+	js=[]
+	for dato in registro:
+		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[5]})
+	d = jsonify(js)
+	return d
 
 @app.route('/Registro', methods = ['POST', 'GET'])
 def registrar():
@@ -119,20 +136,9 @@ def restablecer_contrasena():
 		else:
 			flash('El correo proporcionado no se encuentra registrado en el sistema')
 	return render_template('Cambio_de_contrasena.html', form=form)	
-	
-@app.route('/inicio/', methods=['POST', 'GET'])
-def inicio():
-	#esta autenticado?
-	return render_template('index.html')
 
-@app.route('/monitoreo/', methods=['POST', 'GET'])
-def graficar_m():
-	registro = actualizacion()
-	js=[]
-	for dato in registro:
-		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[5]})
-	d = jsonify(js)
-	return d
+
+
 '''@app.route('/Monitoreo/',  methods=['POST', 'GET'])
 def monitoreo():
 	registro = actualizacion()
@@ -171,26 +177,7 @@ def graficar_prediccion():
     }
 	#prediccion_temp()
 	return data'''
-'''======================SOCKETIO==========================
-socketio = SocketIO(app)
 
-@socketio.on('connect')
-def connect():
-	print('connected')
-
-@socketio.on('my event')
-def handle_json(js):
-	print('received json: ', str(js))
-	datos= json.loads(js)
-	print(datos)
-	almacenamiento(datos)
-	resultado= detectar_condicion(datos)
-	prediccion_temp()
-	mensaje(resultado)
-	
-	@socketio.on('disconnect')
-def disconnect():
-    print('Client disconnected')'''
 #========================================ALERTAS====================================
 def mensaje(resultado):
 	if len(resultado) > 0: 
@@ -215,8 +202,26 @@ def mensaje_contrasena(destinatario):
 @login_manager_app.user_loader
 def load_user(id):
 	return get_by_id(id)'''
+'''======================SOCKETIO==========================
+socketio = SocketIO(app)
 
+@socketio.on('connect')
+def connect():
+	print('connected')
 
+@socketio.on('my event')
+def handle_json(js):
+	print('received json: ', str(js))
+	datos= json.loads(js)
+	print(datos)
+	almacenamiento(datos)
+	resultado= detectar_condicion(datos)
+	prediccion_temp()
+	mensaje(resultado)
+	
+	@socketio.on('disconnect')
+def disconnect():
+    print('Client disconnected')'''
 
 
 if __name__ == "__main__":
