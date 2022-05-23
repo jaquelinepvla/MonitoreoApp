@@ -28,7 +28,7 @@ app.config['MAIL_USE_TLS']=True
 mail= Mail(app)
 #login_manager_app=LoginManager(app)
 acceso=False
-
+#prueba
 #=========================RUTAS=======================================
 @app.route("/hola", methods=['POST', 'GET'])
 def prueba():
