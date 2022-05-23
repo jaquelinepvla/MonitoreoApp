@@ -47,6 +47,23 @@ def prueba():
 	
 	return "todo correcto"
 
+<<<<<<< HEAD:Capa_dominio/app.py
+=======
+	with mail.connect() as conn:
+		subj = "Restablecer contraseña"
+		msg = Message(recipients=destinatario,  subject=subj)
+		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="http://192.168.42.62:8000/Restablecer_contrasena">aquí </A>para continuar.')
+		conn.send(msg)
+
+@socketio.on('disconnect')
+def disconnect():
+    print('Client disconnected')
+''' 
+@login_manager_app.user_loader
+def load_user(id):
+	return get_by_id(id)'''
+	
+>>>>>>> 891d60ac1912d1a49be323c36494c48e192f6302:Capa_dominio/main.py
 @app.route("/", methods=['POST', 'GET'])
 def acceder():
 	
@@ -226,6 +243,7 @@ def disconnect():
 
 if __name__ == "__main__":
 	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
+<<<<<<< HEAD:Capa_dominio/app.py
 	#socketio.run(app, host="https://iotacuicola.herokuapp.com", port=8000, debug=True)
     app.run(debug=True, port=8000)
 '''
@@ -236,6 +254,10 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     return 'Ok'
+=======
+	 socketio.run(app, host="192.168.42.62", port=8000, debug=True)
+    #app.run(debug=True)
+>>>>>>> 891d60ac1912d1a49be323c36494c48e192f6302:Capa_dominio/main.py
 
 if __name__ == "__main__":
     app.run()'''
