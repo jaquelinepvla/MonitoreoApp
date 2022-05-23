@@ -69,10 +69,9 @@ def acceder():
 
 @app.route('/inicio/', methods=['POST', 'GET'])
 def inicio():
-	if acceso==True:
-		return render_template('index.html')
-	else:
-		return redirect(url_for('acceder'))
+	
+	return render_template('index.html')
+	
 
 @app.route('/monitoreo/', methods=['POST', 'GET'])
 def graficar_m():
