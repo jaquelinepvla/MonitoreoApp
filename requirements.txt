@@ -1,45 +1,24 @@
 bidict==0.21.4
 blinker==1.4
-<<<<<<< HEAD
-click==8.0.4
-colorama==0.4.4
-dnspython==2.2.1
-email-validator==1.1.3
-=======
 click==8.0.3
 colorama==0.4.4
 dnspython==2.2.0
 email-validator==1.1.3
 eventlet==0.33.0
->>>>>>> 891d60ac1912d1a49be323c36494c48e192f6302
 Flask==2.0.3
 Flask-Login==0.5.0
 Flask-Mail==0.9.1
 Flask-SocketIO==5.1.1
 Flask-WTF==1.0.0
-<<<<<<< HEAD
 gunicorn==20.1.0
 idna==3.3
 itsdangerous==2.1.0
 Jinja2==3.0.3
 MarkupSafe==2.1.0
 numpy==1.22.3
-=======
-greenlet==1.1.2
-gunicorn==20.1.0
-idna==3.3
-itsdangerous==2.0.1
-Jinja2==3.0.3
-MarkupSafe==2.0.1
-numpy==1.22.2
->>>>>>> 891d60ac1912d1a49be323c36494c48e192f6302
 psycopg2==2.9.3
 python-decouple==3.6
 python-engineio==4.3.1
 python-socketio==5.5.2
-<<<<<<< HEAD
-=======
-six==1.16.0
->>>>>>> 891d60ac1912d1a49be323c36494c48e192f6302
 Werkzeug==2.0.3
 WTForms==3.0.1
