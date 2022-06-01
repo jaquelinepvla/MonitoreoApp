@@ -8,28 +8,30 @@
 Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
 -->
 {%block logo%}
-   <CENTER>MonitoreoApp</CENTER>
+   MonitoreoApp
 {%endblock%}
 
 {% block content_tabla %}
 <CENTER>
-   <form action= "" method="POST" class="formularios">
-    <h3 class="display-5 text-center"  style="color: rgb(0, 0, 0); font-weight: bold; font-size: 18pt;">Crear cuenta</h3>
-       {{form.nombre.label(class="col-sm-2 col-form-label")}}
-       {{form.nombre(class="form-control")}}
-    
-       {{form.email.label(class="col-sm-2 col-form-label")}}
-       {{form.email(class="form-control")}}
-   
-       
-       {{form.usuario.label(class="col-sm-2 col-form-label")}}
-       {{form.usuario(class="form-control")}}
+   <div class="full-width d-flex justify-content-center and align-items-center">
+      <form action= "" method="POST" class="container col-lg-5">
+      <h3 class="display-5 text-center" style="color: white; font-weight: bold; font-size: 18pt;">Crear cuenta</h3>
+         {{form.nombre.label(class="col-sm-2 col-form-label")}}
+         {{form.nombre(class="form-control", style="background: transparent;")}}
       
-       {{form.contrasena.label(class="col-sm-2 col-form-label")}}
-       {{form.contrasena(class="form-control")}}
-       <br/>
-      {{form.enviar(class="btn btn-primary mb-3", style="font-weight: bold;")}}
+         {{form.email.label(class="col-sm-2 col-form-label")}}
+         {{form.email(class="form-control", style="background: transparent;")}}
+      
+         
+         {{form.usuario.label(class="col-sm-2 col-form-label")}}
+         {{form.usuario(class="form-control", style="background: transparent;")}}
+         
+         {{form.contrasena.label(class="col-sm-2 col-form-label")}}
+         {{form.contrasena(class="form-control", style="background: transparent;")}}
+         <br/>
+         {{form.enviar(class="btn btn-primary mb-3", style="font-weight: bold;")}}
 
-   </form></CENTER>
+      </form></CENTER>
+   </div>
 
 {% endblock %}

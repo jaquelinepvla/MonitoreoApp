@@ -4,6 +4,7 @@
     padding: 0px;
     font-family: helvetica;
     text-decoration: none;
+    
 }
 
 body{
@@ -11,23 +12,39 @@ body{
     display: grid;
     min-height: 100vh;
     grid-template-rows: auto 1fr auto;
-}
-
-footer{
-    
- 
     width: 100%;
-    height: 60px;
-    background-color: rgb(230, 230, 230);
-    color: #080707;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    box-shadow: 0px opx 20px rgb(160, 209, 233);
-    text-align: center;
-
+    height: 100vh;
+    background: linear-gradient(rgba(21, 58, 73, 0.5), rgba(19, 56, 73, 0.2)), url("../img/background-sea-water.jpg") top center;
+    background-size: cover;
+    position: relative;
+    margin-bottom: -90px;
 }
 
-.formularios{
+.container{
+    padding: 10px;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    background-color: rgba(255, 255, 255, 0.1);;
+    backdrop-filter: blur(20px) ;
+    border-radius: 5px;
+    border: solid 1px rgba(255, 255, 255, 0.1);;
+    color: white;
+}
+
+.full-width{
+    min-height: 100vh;
+}
+
+/*.forms{
+    width: 60%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px) ;
+    border-radius: 5px;
+    border: solid 1px rgba(1, 1, 1, 0.1);
+    color: white;
+    top: 120px;
     max-width: 30em;
     padding: 1.3em;
     background-color: #e3e4f8;
@@ -39,7 +56,7 @@ footer{
     left: 39%;
     width: 40%;
 
-}
+}*/
 
 .container-fluid{
     background-color: #284469;
@@ -54,18 +71,21 @@ footer{
     
 }
 
-.alert alert-warning alert-dismissible{
-    width: 100%;
+#alerta{
+    width: 50%;
     height: 20%;
+    margin-bottom: 30%;
     position: relative;
 }
 
-#content_logo{
-    left: 37%;
-    width: 30%;
-    top: 80px;
-    color: #284469;
-    position: absolute;
-    font-weight: bold;
-   
+.logo{
+    font-size: 10px;
+    padding: 30px;
+    margin-left: 10px;
+    letter-spacing: 1px;
+    font-family: "Poppins", sans-serif;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
 }
+

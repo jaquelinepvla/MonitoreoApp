@@ -5,9 +5,9 @@ $(document).ready(function(){
 });
 
 //urls servidor
-let urlMonitoreo ="http://127.0.0.1:8000/";
-let urlCharM ="https://iotacuicola.herokuapp.com/monitoreo/";
-let urlPronostico = "http://127.0.0.1:8000/Prediccion/";
+//let urlMonitoreo ="http://127.0.0.1:8000/";
+let urlCharM ="http://127.0.0.1:8000/monitoreo/";
+//let urlPronostico = "http://127.0.0.1:8000/Prediccion/";
 
 //Etiquetas html
 let tablaM = "tablaM";
@@ -15,7 +15,6 @@ let tablaP = "tablaP";
 let chartM = "chartM";
 let chartP = "chartP";
 
-var dataM = $.get(urlMonitoreo);
 var dataCm = $.get(urlCharM);
 
 //Tablas

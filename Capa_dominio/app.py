@@ -14,9 +14,11 @@ from Validaciones import acceso_val, registro_val
 from flask_socketio import SocketIO
 from flask_mail import Mail, Message
 import json
+from flask_cors import CORS, cross_origin
 #from flask_login import LoginManager, login_user, logout_user, login_required
 
 app = Flask(__name__)
+CORS(app)
 app.config['SECRET_KEY'] = '\xa6\x8b\xafF\xee\x81\xaa\x0e\xb8/\xd4H\xdb\xff\x9b\x19g+sM\x8dQ\xda\x05'
 app.config['MAIL_SERVER']= 'smtp.gmail.com'
 app.config['MAIL_PORT']=587
@@ -29,7 +31,7 @@ mail= Mail(app)
 #login_manager_app=LoginManager(app)
 acceso=False
 #prueba
-#=========================RUTAS=======================================
+#==================================RUTAS=======================================
 @app.route("/hola", methods=['POST', 'GET'])
 def prueba():
 	
@@ -47,6 +49,23 @@ def prueba():
 	
 	return "todo correcto"
 
+@cross_origin
+@app.route('/inicio/', methods=['POST', 'GET'])
+def inicio():
+	return render_template('index.html')
+	
+@cross_origin
+@app.route('/monitoreo/', methods=['POST', 'GET'])
+def graficar_m():
+	registro = actualizacion()
+	js=[]
+	for dato in registro:
+		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[5]})
+	d = jsonify(js)
+	print(js)
+	return d
+
+#===============================Rutas usuarios====================================
 @app.route("/", methods=['POST', 'GET'])
 def acceder():
 	
@@ -66,21 +85,6 @@ def acceder():
 		flash('¡Acceso incorrecto! verifique que el usuario y la contraseña coincidan')
 	
 	return render_template('login.html', form=form)
-
-@app.route('/inicio/', methods=['POST', 'GET'])
-def inicio():
-	
-	return render_template('index.html')
-	
-
-@app.route('/monitoreo/', methods=['POST', 'GET'])
-def graficar_m():
-	registro = actualizacion()
-	js=[]
-	for dato in registro:
-		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[5]})
-	d = jsonify(js)
-	return d
 
 @app.route('/Registro', methods = ['POST', 'GET'])
 def registrar():
@@ -135,8 +139,29 @@ def restablecer_contrasena():
 		else:
 			flash('El correo proporcionado no se encuentra registrado en el sistema')
 	return render_template('Cambio_de_contrasena.html', form=form)	
+#=============================================ALERTAS=======================================
+def mensaje(resultado):
+	if len(resultado) > 0: 
+		r=str(resultado).replace('[','').replace(']','').replace('{','').replace('}','').replace("'",'')
+		print(r)
+		with mail.connect() as conn:
+			subj = "Alerta"
+			msg = Message(recipients=consulta_email(),  subject=subj)
+			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="https://iotacuicola.herokuapp.com/">aquí.</A>')
+			conn.send(msg) 
 
+def mensaje_contrasena(destinatario):
 
+	with mail.connect() as conn:
+		subj = "Restablecer contraseña"
+		msg = Message(recipients=destinatario,  subject=subj)
+		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="https://iotacuicola.herokuapp.com//Restablecer_contrasena">aquí </A>para continuar.')
+		conn.send(msg)
+
+if __name__ == "__main__":
+	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
+	#socketio.run(app, host="https://iotacuicola.herokuapp.com", port=8000, debug=True)
+    app.run(debug=True, port=8000)
 
 '''@app.route('/Monitoreo/',  methods=['POST', 'GET'])
 def monitoreo():
@@ -177,26 +202,6 @@ def graficar_prediccion():
 	#prediccion_temp()
 	return data'''
 
-#========================================ALERTAS====================================
-def mensaje(resultado):
-	if len(resultado) > 0: 
-		r=str(resultado).replace('[','').replace(']','').replace('{','').replace('}','').replace("'",'')
-		print(r)
-		with mail.connect() as conn:
-			subj = "Alerta"
-			msg = Message(recipients=consulta_email(),  subject=subj)
-			msg.html =(f'<b>Se han detectado valores fuera de rango</b><br><br>{r}<br><b> <br>Consulta más información </b><A HREF="https://iotacuicola.herokuapp.com/">aquí.</A>')
-			conn.send(msg) 
-
-def mensaje_contrasena(destinatario):
-
-	with mail.connect() as conn:
-		subj = "Restablecer contraseña"
-		msg = Message(recipients=destinatario,  subject=subj)
-		msg.html =('Has solicitado restablecer la contraseña de tu cuenta de MonitoreoApp. Ingresa <A HREF="https://iotacuicola.herokuapp.com//Restablecer_contrasena">aquí </A>para continuar.')
-		conn.send(msg)
-
-
 ''' 
 @login_manager_app.user_loader
 def load_user(id):
@@ -223,10 +228,7 @@ def disconnect():
     print('Client disconnected')'''
 
 
-if __name__ == "__main__":
-	#debug=True para no tener que estar reiniciando el servidor cada que se actualice algo
-	#socketio.run(app, host="https://iotacuicola.herokuapp.com", port=8000, debug=True)
-    app.run(debug=True, port=8000)
+
 '''
 from flask import Flask, request
 

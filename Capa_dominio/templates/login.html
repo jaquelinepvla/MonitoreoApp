@@ -1,38 +1,37 @@
 <!--extends sirve para indicar que esta plantilla va a heredar de layout-->
 {% extends 'layout.html' %}
-<!-- Indicamos que title sera el bloque que usara -->
+<!-- Indicamos que title sera el bloque que usara 
 {% block title %}
    Monitoreo
-{% endblock %}
+{% endblock %}-->
 <!-- Indicamos que content sera el bloque que usara
 Tambien se pueden crear includes (una carpeta con otros archivos html en dónde se encuentre esta funcionalidad separada - revisar el ultimo video de la sección 45 del cursox)
 -->
-{%block logo%}
-  <CENTER>MonitoreoApp</CENTER>
-{%endblock%}
+
 
 {% block content_tabla %}
 <CENTER>
-  <form action= "" method="POST" class="formularios">
-    <h3 class="display-5 text-center"  style="color: rgb(0, 0, 0); font-weight: bold; font-size: 18pt;">Inicia sesión</h3>
-    {{form.usuario.label(class="col-sm-2 col-form-label")}}
-    {{form.usuario(class="form-control")}}
-        
-    {{form.contrasena.label(class="col-sm-2 col-form-label")}}
-    {{form.contrasena(class="form-control")}}
-    <br/>
-    
-    {{form.acceder(class="btn btn-primary mb-3", style="font-weight: bold;")}}
-    
-    <ul> 
-  
-      ¿Eres nuevo? <a href="{{ url_for('registrar')}}">Regístrate aquí</a>
+  <div class="full-width d-flex justify-content-center and align-items-center">
+    <form action= "" method="POST" class="container col-lg-5">
+      <h3 class="display-5 text-center"  style="color: white; font-weight: bold; font-size: 18pt;">Inicia sesión</h3>
+      {{form.usuario.label(class="col-xs-3 col-form-label")}}
+      {{form.usuario(class="form-control", style="background: transparent;")}}
+          
+      {{form.contrasena.label(class="col-sm-5 col-form-label")}}
+      {{form.contrasena(class="form-control", style="background: transparent;")}}
       <br/>
-      <a href="{{ url_for('restablecer_contrasena')}}">¿Olvidaste la contraseña?</a>
-        
-      </ul> </CENTER>
-
-    </form> 
+      
+      {{form.acceder(class="btn btn-primary mb-3", style="font-weight: bold;")}}
+      
+      <ul> 
+    
+        ¿Eres nuevo? <a href="{{ url_for('registrar')}}"  style="color: rgb(3, 49, 71);">Regístrate aquí</a>
+        <br/>
+        <a href="{{ url_for('restablecer_contrasena')}}" style="color: rgb(3, 49, 71);">¿Olvidaste la contraseña?</a>
+        </ul> </CENTER>
+       
+      </form> 
+    </div>
     
 
 {% endblock %}
