@@ -1,5 +1,7 @@
 import datetime
 import email
+from email.policy import default
+from runpy import run_path
 import numpy as np
 from flask import Flask, jsonify, request, render_template
 from flask import redirect, url_for, flash
@@ -15,6 +17,8 @@ from flask_socketio import SocketIO
 from flask_mail import Mail, Message
 import json
 from flask_cors import CORS, cross_origin
+
+acceso=False
 #from flask_login import LoginManager, login_user, logout_user, login_required
 
 app = Flask(__name__)
@@ -29,7 +33,7 @@ app.config['MAIL_USE_TLS']=True
 
 mail= Mail(app)
 #login_manager_app=LoginManager(app)
-acceso=False
+
 #prueba
 #==================================RUTAS=======================================
 @app.route("/hola", methods=['POST', 'GET'])
@@ -58,17 +62,32 @@ def inicio():
 @app.route('/monitoreo/', methods=['POST', 'GET'])
 def graficar_m():
 	registro = actualizacion()
-	js=[]
+	print(registro)
+	o =[]
+	t = []
+	h = []
+	f=[]
 	for dato in registro:
-		js.append({'O': dato[1], 'temp': dato[2], 'f':dato[5]})
-	d = jsonify(js)
-	print(js)
-	return d
+		o.append(dato[1])
+		t.append(dato[2])
+		h.append(dato[5].strftime('%H:%M:%S'))
+		f.append(dato[5].strftime('%d/%m/%Y'))
+	o_reverse= o[::-1]
+	t_reverse= t[::-1]
+	h_reverse= h[::-1]	
+	data = {
+	"oxigeno": o_reverse,
+	"temperatura": t_reverse,
+	"hora": h_reverse,
+	"fecha": f
+    }
+	return jsonify(data)
+
 
 #===============================Rutas usuarios====================================
-@app.route("/", methods=['POST', 'GET'])
+@app.route("/hacer", methods=['POST', 'GET'])
 def acceder():
-	
+	global acceso
 	form = acceso_val()
 
 	if request.method == 'POST': 
@@ -76,6 +95,7 @@ def acceder():
 		contrasena = form.contrasena.data
 		u = Usuario('','', '', usuario, contrasena)
 		acceso = u.acceso()
+		print('datos usuario: ', acceso)
 		#user=u.get_id()
 		#print (user)
 		if  acceso == True:
@@ -85,6 +105,27 @@ def acceder():
 		flash('¡Acceso incorrecto! verifique que el usuario y la contraseña coincidan')
 	
 	return render_template('login.html', form=form)
+
+@app.before_request
+def login():
+	global acceso
+	print('esto es la ruta', request.path)
+	path=request.path
+	if path == '/hacer' or  path == '/inicio/':
+		
+		print('el acceso es: ', acceso)
+		if request.path != '/hacer':
+			print('No estas en login')
+			#user=u.get_id()
+			#print (user)
+			print('esto es la ruta', request.path)
+			if  acceso == False:
+				#login_user(u)
+				return redirect(url_for('acceder'))
+		else: print('estas en login')
+
+
+
 
 @app.route('/Registro', methods = ['POST', 'GET'])
 def registrar():
