@@ -5,9 +5,10 @@ from runpy import run_path
 import numpy as np
 from flask import Flask, jsonify, request, render_template
 from flask import redirect, url_for, flash
+from Prediccion import actualizacion_prediccion
 #from Usuarios import get_by_id
 from Validaciones import contrasena_val, email_val
-from Prediccion import actualizacion_prediccion
+#from Prediccion import actualizacion_prediccion
 from Prediccion import prediccion_temp
 from Usuarios import Usuario
 from Notificacion import detectar_condicion, consulta_email
@@ -48,6 +49,7 @@ def prueba():
 		almacenamiento(dato)
 		resultado = detectar_condicion(dato)
 		mensaje(resultado)
+		prediccion_temp()
 
 	prediccion_temp()
 	
@@ -74,12 +76,43 @@ def graficar_m():
 		f.append(dato[5].strftime('%d/%m/%Y'))
 	o_reverse= o[::-1]
 	t_reverse= t[::-1]
-	h_reverse= h[::-1]	
+	h_reverse= h[::-1]
+	f_reverse= f[::-1]
+	print(h)
+	print(h_reverse)
+
 	data = {
 	"oxigeno": o_reverse,
 	"temperatura": t_reverse,
 	"hora": h_reverse,
-	"fecha": f
+	"fecha": f_reverse
+    }
+	return jsonify(data)
+
+@app.route('/predecir/', methods=['POST', 'GET'])
+def graficar_prediccion():
+	registro = actualizacion_prediccion()
+	o =[]
+	t = []
+	h = []
+	f=[]
+	for dato in registro:
+		o.append(dato[1])
+		t.append(dato[2])
+		h.append(dato[5].strftime('%H:%M:%S'))
+		f.append(dato[5].strftime('%d/%m/%Y'))
+	o_reverse= o[::-1]
+	t_reverse= t[::-1]
+	h_reverse= h[::-1]
+	f_reverse= f[::-1]
+	print(h)
+	print(h_reverse)
+
+	data = {
+	"oxigeno": o_reverse,
+	"temperatura": t_reverse,
+	"hora": h_reverse,
+	"fecha": f_reverse
     }
 	return jsonify(data)
 
@@ -87,6 +120,7 @@ def graficar_m():
 #===============================Rutas usuarios====================================
 @app.route("/hacer", methods=['POST', 'GET'])
 def acceder():
+	prediccion_temp()
 	global acceso
 	form = acceso_val()
 
@@ -112,7 +146,6 @@ def login():
 	print('esto es la ruta', request.path)
 	path=request.path
 	if path == '/hacer' or  path == '/inicio/':
-		
 		print('el acceso es: ', acceso)
 		if request.path != '/hacer':
 			print('No estas en login')
@@ -123,8 +156,6 @@ def login():
 				#login_user(u)
 				return redirect(url_for('acceder'))
 		else: print('estas en login')
-
-
 
 
 @app.route('/Registro', methods = ['POST', 'GET'])
@@ -214,36 +245,7 @@ def predecir():
 	registro = actualizacion_prediccion()
 	return render_template('Prediccion.html', registro= registro)
 
-@app.route('/predecir/', methods=['POST', 'GET'])
-def graficar_prediccion():
-	registro = actualizacion_prediccion()
-	o =[]
-	t = []
-	h = []
-	f=[]
-	#datos = actualizacion()
-	
-	for dato in registro:
-		o.append(dato[1])
-		t.append(dato[2])
-		dato[3] = datetime.time.strftime("%H:%M:%S")
-		f.append(dato[4])
-		#h.append(dato[4].strftime('%H:%M:%S'))
-		#f.append(dato[3].strftime('%d/%m/%Y'))
-	o_reverse= o[::-1]
-	t_reverse= t[::-1]
-	f_reverse= f[::-1]	
-	data = {
-	"oxigeno": o_reverse,
-	"temperatura": t_reverse,
-	"tiempo": f_reverse
-	#"hora": h_reverse,
-	#"fecha": f
-    }
-	#prediccion_temp()
-	return data'''
 
-''' 
 @login_manager_app.user_loader
 def load_user(id):
 	return get_by_id(id)'''

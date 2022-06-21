@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 import datetime
+from itertools import count
 from pprint import pprint
 from time import time
 from webbrowser import get
@@ -7,74 +8,84 @@ from Conexion import conectar;
 from datetime import datetime
 
 def prediccion_temp():
+
     con = conectar()
     cursor = con.cursor() 
-    di="Select temperatura from parametros order by id asc limit 1;"
-    df="Select temperatura from parametros order by id desc limit 1;"
-    ti="Select hora from parametros order by id asc limit 1;"
-    tf="Select hora from parametros order by id desc limit 1;"
-    oi="Select oxigeno from parametros order by id asc limit 1;"
-    of="Select oxigeno from parametros order by id desc limit 1;"
-    cursor.execute(di)
-    cdi=cursor.fetchone()
-    cursor.execute(df)
-    cdf=cursor.fetchone()
-    cursor.execute(ti)
-    cti=cursor.fetchone()
-    cursor.execute(tf)
-    ctf=cursor.fetchone()
-    cursor.execute(oi)
-    coi=cursor.fetchone()
-    cursor.execute(of)
-    cof=cursor.fetchone()
-   
+    d="Select * from parametros order by id desc limit 11;"
+    cursor.execute(d)
+    datos=cursor.fetchall()
     con.commit()
     cursor.close()
     con.close()
-   
-    tiempoi = cti[0].strftime('%H:%M:%S')
-    tsi = get_hra(tiempoi)
-    tiempof = ctf[0].strftime('%H:%M:%S')
-    tsf = get_hra(tiempof)
-    
-    pt=extrapolacion(tsi, tsf, cdi, cdf)
-    po=extrapolacion(tsi, tsf, coi, cof)
-
-    str_hp=get_string_hra(tsf+(5/60))
-    
-    almacear_prediccion(pt, po, str_hp, date.today())
+    pronostico_t=[]
+    pronostico_o=[]
+    d=datos[::-1]
+    datos_f=d[10]
+    tiempo_f=datos_f[5]
+    oxig_f=datos_f[1]
+    temp_f= datos_f[2]
+    count=1
+    incremento = timedelta(minutes=5)
+    xf=tiempo_f
+    tiempo=[]
+    for dato in d:
+        tiempo_i=dato[5]
+        oxig_i=dato[1]
+        temp_i=dato[2]
+        p_temp=extrapolacion(tiempo_i, tiempo_f, temp_i, temp_f)   
+        p_oxigeno=extrapolacion(tiempo_i, tiempo_f, oxig_i, oxig_f)
+        pronostico_t.append(p_temp)  
+        pronostico_o.append(p_oxigeno)
+        xf+=incremento
+        tiempo.append(xf)
+        print(tiempo)
+        #lmacenar_prediccion(p_oxigeno, p_temp, xf)
+        count+=1
+        if count>10:
+            break
 
 def extrapolacion(xi, xf, yi, yf):
-    di=float(yi[0])
-    df=float(yf[0])
+    incremento = timedelta(minutes=5)
+    di=float(yi)
+    df=float(yf)
     print(yi, yf, di, df, xi, xf)
-    xp= xf+5
-    dx=xp-xi
-    p=((df-di)/(xf-xi))*dx + di
+    xp= xf+incremento
+    dx=resta_tiempo(xp, xi)
+    dt=resta_tiempo(xf, xi)
+    p=((df-di)/(dt))*dx + di
     print(p)
     return format(p, '2.1f')
 
-def get_hra(t):
-    h, m, s = t.split(':')
-    print()
-    return int(h) + int(m)/60 + (int(s)/3600)
-
-def get_string_hra(t):
-    segundos=t*3600
-    horas= segundos//3600
-    sobrante1=segundos % 3600
-    minutos= sobrante1//60
-    sobrante2=sobrante1 % 60
-    str='%s::%s::%s'  % (int(horas),int(minutos),int(sobrante2))
-    hora = datetime.strptime(str, '%H::%M::%S').time()
-    return hora
+def resta_tiempo(datef, datei):
  
+    año=datef.year-datei.year
+    mes=datef.month-datei.month
+    dias=datef.day-datei.day
+    minutos=datef.minute-datei.minute
+    segundos=datef.second-datei.second
 
-def almacear_prediccion(pt,po,h,f):
+    hora1=datei.hour
+    hora2=datef.hour
+    if hora1==00:
+        hora1=24
+    if hora2==00:
+        hora2=24
+    horas = hora2-hora1
+    a=año*31536000
+    m=mes*2592000
+    d=dias*86400
+    h=horas*3600
+    m=minutos*60
+    
+    total = a + m + d + h + m + segundos
+    print('este es el total', total, a, m, d, h, m, segundos)
+    return total
+
+def almacenar_prediccion(o, temp, t):
     con = conectar()
     cursor = con.cursor() 
     #Crear y ejecutar consulta
-    consulta = "INSERT INTO prediccion(oxigeno, temperatura, fecha, hora) VALUES('{0}', '{1}', '{2}', '{3}')".format(po, pt, f, h) 
+    consulta = "INSERT INTO prediccion(oxigeno, temperatura, tiempo) VALUES('{0}', '{1}', '{2}')".format(o, temp, t) 
     cursor.execute(consulta)
     #Hacer cambios en la base de datos
     con.commit()
@@ -92,3 +103,21 @@ def actualizacion_prediccion():
     cursor.close()
     con.close()
     return registro
+
+
+
+'''def get_hra(t):
+    h, m, s = t.split(':')
+    print()
+    return int(h) + int(m)/60 + (int(s)/3600)
+
+def get_string_hra(t):
+    segundos=t*3600
+    horas= segundos//3600
+    sobrante1=segundos % 3600
+    minutos= sobrante1//60
+    sobrante2=sobrante1 % 60
+    str='%s::%s::%s'  % (int(horas),int(minutos),int(sobrante2))
+    hora = datetime.strptime(str, '%H::%M::%S').time()
+    return hora
+ '''

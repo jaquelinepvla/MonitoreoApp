@@ -49,7 +49,7 @@
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo">
-        <h1 class="text-light"><a href="index.html"><span>MonitoreoApp</span></a></h1>
+        <h1 class="text-light"><a href="http://127.0.0.1:8000/inicio"><span>MonitoreoApp</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -61,7 +61,7 @@
           <!--<li><a class="nav-link scrollto" href="#services">Tabla monitoreo</a></li>-->
           <li><a class="nav-link scrollto" href="#portfolio">Pronóstico</a></li>
           <!--<li><a class="nav-link scrollto" href="#testimonials section-bg">Tabla pronostico</a></li>-->
-          <li><a class="nav-link scrollto" href="#team">Salir</a></li>
+          <li><a class="nav-link scrollto" href="http://127.0.0.1:8000/hacer">Salir</a></li>
           <!--<li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -94,15 +94,13 @@
       <div class="container resumen_M">
         <div class="text">
           <p id="principal"><strong>Estado actual</strong></p>
-          <p id="fecha_m"></p>
-          <p id="dato_O"></p>
+          <p id="datos_m"></p>
         </div>
       </div>
       <div class="container resumen_P">
         <div class="text">
           <p id="principal"><strong>Pronóstico</strong></p>
-          <p id="fecha_p">07:34:00 - 05/16/2022</p>
-          <p id="dato_p">O:8 mg/L   T:25°C</p>
+          <p id="datos_p">O:8 mg/L   T:25°C</p>
         </div>
         
       </div>
@@ -116,217 +114,43 @@
     <!-- ======= About Section (Grafica datos monitoreo)======= -->
     <section id="about" class="about">
       <div class="container">
-        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <div id="monitoreo" class="section-title" data-aos="fade-in" data-aos-delay="100">
           <h2>Estado del estanque</h2>
           <p>Estado del oxígeno disuelto y temperatura del estanque.</p>
         </div>
         <div class="row no-gutters">
           <div class="content col-xl-3 d-flex align-items-stretch" data-aos="fade-up">
-            <!--<div class="content">
-              <div class="table-responsive">
-                <table id = "tablaM" class="table table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">O (mg/L)</th>
-                      <th scope="col">T (°C)</th>
-                      <th scope="col">Tiempo</th> 
-                    </tr>
-                  </thead>
-                </table>
-                </div>  -->     
-            <!--</div>-->
+   
           </div>
-          <!--<div class="col-xl-6 d-flex align-items-stretch">
-            <div class="icon-boxes d-flex flex-column justify-content-center">
-              <div class="row">
-                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
-                  <i class="bx bx-receipt"></i>
-                  <h4>Corporis voluptates sit</h4>
-                  <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
-                </div>
-               
-              </div>
-            </div>--- End .content
-          </div>-->
+        
           <div class="content col-xl-7 d-flex align-items-stretch" data-aos="fade-up">
-            <canvas id="chartM" width="600" height="400"></canvas>
+            <canvas id="chartM" width="300" height="150"></canvas>
           </div>
         </div>
       </div>
-    </section><!-- End About Section -->
- 
+     
+      </section><!-- End about -->
 
-    <!-- ======= Services Section (Tabla datos monitoreo)======= -->
-    <!--<section id="services" class="services">
-      <div class="container">
-        <div class="row no-gutters">
-          <div class="content col-xl-6 d-flex align-items-stretch" data-aos="fade-up">
-            <div class="content">
-              <h3>Estado del estanque</h3>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-              </p>
-              
+
+      <section id="portfolio" class="about">
+          
+        <div class="container">
+          <div id="pronostico" class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2>Pronóstico</h2>
+            <p>Pronóstico del oxígeno disuelto y temperatura del estanque.</p>
+          </div>
+          <div class="row no-gutters">
+            <div class="content col-xl-3 d-flex align-items-stretch" data-aos="fade-up">
+     
+            </div>
+          
+            <div class="content col-xl-7 d-flex align-items-stretch" data-aos="fade-up">
+              <canvas id="chartP" width="300" height="150"></canvas>
             </div>
           </div>
-          <div class="col-xl-6 d-flex align-items-stretch">
-            <div class="icon-boxes d-flex flex-column justify-content-center">
-              <div class="row">
-                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
-                  <i class="bx bx-receipt"></i>
-                  <h4>Corporis voluptates sit</h4>
-                  <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
-                </div>
-
-        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
-          <h2>Services</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up">
-              <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <div class="icon"><i class="bx bx-file"></i></div>
-              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4 class="title"><a href="">Magni Dolores</a></h4>
-              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
-              <div class="icon"><i class="bx bx-world"></i></div>
-              <h4 class="title"><a href="">Nemo Enim</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>--><!-- End Services Section -->
-
-    <!-- ======= Counts Section ======= -->
-    <!--<section id="counts" class="counts  section-bg">
-      <div class="container">
-
-        <div class="row no-gutters">
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
-            <div class="count-box">
-              <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Happy Clients</strong> consequuntur quae</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
-            <div class="count-box">
-              <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Projects</strong> adipisci atque cum quia aut</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
-            <div class="count-box">
-              <i class="bi bi-headset"></i>
-              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Hours Of Support</strong> aut commodi quaerat</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
-            <div class="count-box">
-              <i class="bi bi-people"></i>
-              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Hard Workers</strong> rerum asperiores dolor</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>--><!-- End Counts Section -->
-
-    <!-- ======= Cta Section ======= -->
-    <!--<section id="cta" class="cta">
-      <div class="container" data-aos="zoom-in">
-
-        <div class="text-center">
-          <h3>Call To Action</h3>
-          <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <a class="cta-btn" href="#">Call To Action</a>
-        </div>
-
-      </div>
-    </section>--><!-- End Cta Section -->
-
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
-      <div class="container">
-
-        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
-          <h2>Pronóstico</h2>
-          <p>Pronóstico del oxígeno y temperatura del estanque.</p>
         </div>
         
-        <div class="row no-gutters">
-          <div class="content col-xl-6 d-flex align-items-stretch" data-aos="fade-up">
-            <!--<div class="content">-->
-              <div class="table-responsive">
-                <table id = "tablaP" class="table table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">O (mg/L)</th>
-                      <th scope="col">T (°C)</th>
-                      <th scope="col">Tiempo</th>
-                      
-                    </tr>
-                  </thead>
-
-                </table>
-                
-              </div>       
-              
-            <!--</div>-->
-          </div>
-          <!--<div class="col-xl-6 d-flex align-items-stretch">
-            <div class="icon-boxes d-flex flex-column justify-content-center">
-              <div class="row">
-                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
-                  <i class="bx bx-receipt"></i>
-                  <h4>Corporis voluptates sit</h4>
-                  <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
-                </div>
-               
-              </div>
-            </div><!-- End .content
-          </div>-->
-          <div class="content col-xl-6 d-flex align-items-stretch" data-aos="fade-up">
-            <!--<div class="content">-->
-              <p>Aquí va la grafica</p>    
-              <canvas id="chart" width="400" height="400"></canvas>
-            <!--</div>-->
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End Portfolio Section -->
+      </section>
 
 
   </main><!-- End #main -->
@@ -338,32 +162,6 @@
         <div class="row">
 
           <div class="col-lg-4 col-md-6">
-            <!--<div class="footer-info">
-              <h3>Squadfree</h3>
-              <p class="pb-3"><em>Qui repudiandae et eum dolores alias sed ea. Qui suscipit veniam excepturi quod.</em></p>
-              <p>
-                A108 Adam Street <br>
-                NY 535022, USA<br><br>
-                <strong>Phone:</strong> +1 5589 55488 55<br>
-                <strong>Email:</strong> info@example.com<br>
-              </p>
-              <div class="social-links mt-3">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-              </div>
-            </div>-->
-          </div>
-
-          <div class="col-lg-4 col-md-6 footer-newsletter">
-            <!--h4>Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>-->
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-
           </div>
 
         </div>
@@ -372,7 +170,7 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>Squadfree</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>MonitoreoApp</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->

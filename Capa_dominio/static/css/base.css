@@ -363,7 +363,7 @@ h1, h2, h3, h4, h5, h6 {
 .text{
   color: white;
   opacity: 1;
-  font-size: 26px;
+  font-size: 22px;
 
 
 }
@@ -503,6 +503,7 @@ section {
 .about .container {
   position: relative;
   z-index: 10;
+  height: 95vh;
 }
 .about .content {
   padding: 30px 30px 30px 0;
