@@ -160,8 +160,8 @@ dataP.done(function(resp){
     var Yoxig = resp['oxigeno']
     var Ytemp = resp['temperatura']
 
-    mostrarResumen(Xf, Xhr, Yoxig, Ytemp, resumenM);
-    updateChart(Ytemp, Yoxig, Xhr, myChartM);
+    mostrarResumen(Xf, Xhr, Yoxig, Ytemp, resumenP);
+    updateChart(Ytemp, Yoxig, Xhr, myChartP);
     
 
 });
