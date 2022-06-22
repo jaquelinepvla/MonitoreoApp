@@ -49,7 +49,7 @@ def prueba():
 		almacenamiento(dato)
 		resultado = detectar_condicion(dato)
 		mensaje(resultado)
-		prediccion_temp()
+		
 
 	prediccion_temp()
 	
@@ -118,7 +118,7 @@ def graficar_prediccion():
 
 
 #===============================Rutas usuarios====================================
-@app.route("/hacer", methods=['POST', 'GET'])
+@app.route("/", methods=['POST', 'GET'])
 def acceder():
 	prediccion_temp()
 	global acceso
