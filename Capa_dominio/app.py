@@ -120,6 +120,7 @@ def graficar_prediccion():
 #===============================Rutas usuarios====================================
 @app.route("/", methods=['POST', 'GET'])
 def acceder():
+	print('hola')
 	
 	global acceso
 	form = acceso_val()
