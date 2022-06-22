@@ -88,7 +88,7 @@ def graficar_m():
 	"fecha": f_reverse
     }
 	return jsonify(data)
-
+@cross_origin
 @app.route('/predecir/', methods=['POST', 'GET'])
 def graficar_prediccion():
 	registro = actualizacion_prediccion()
