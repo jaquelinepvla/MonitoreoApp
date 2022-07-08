@@ -148,7 +148,7 @@ def login():
 	path=request.path
 	if path == '/' or  path == '/inicio/':
 		print('el acceso es: ', acceso)
-		if request.path != '/hacer':
+		if request.path != '/':
 			print('No estas en login')
 			#user=u.get_id()
 			#print (user)
