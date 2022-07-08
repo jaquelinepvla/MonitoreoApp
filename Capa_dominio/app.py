@@ -146,7 +146,7 @@ def login():
 	global acceso
 	print('esto es la ruta', request.path)
 	path=request.path
-	if path == '/hacer' or  path == '/inicio/':
+	if path == '/' or  path == '/inicio/':
 		print('el acceso es: ', acceso)
 		if request.path != '/hacer':
 			print('No estas en login')
