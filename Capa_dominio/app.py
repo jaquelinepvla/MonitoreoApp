@@ -5,10 +5,10 @@ from runpy import run_path
 import numpy as np
 from flask import Flask, jsonify, request, render_template
 from flask import redirect, url_for, flash
-from Prediccion import actualizacion_prediccion
+#from Prediccion import actualizacion_prediccion
 #from Usuarios import get_by_id
 from Validaciones import contrasena_val, email_val
-#from Prediccion import actualizacion_prediccion
+from Prediccion import actualizacion_prediccion
 from Prediccion import prediccion_temp
 from Usuarios import Usuario
 from Notificacion import detectar_condicion, consulta_email

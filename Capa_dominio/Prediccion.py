@@ -6,6 +6,59 @@ from time import time
 from webbrowser import get
 from Conexion import conectar;
 from datetime import datetime
+#import tensorflow as tf
+#from tensorflow import keras
+#from keras.models import load_model
+#from sklearn.preprocessing import MinMaxScaler
+#import pandas as pd
+
+''' 
+new_model =tf.keras.models.load_model('modelo_gru_1.h5')
+new_model.summary()
+
+
+# Ajustar el scaler usando los datos de entrada
+temp_test = np.array(test_dataset['temperatura'])
+oxg_test = np.array(test_dataset['oxigeno'])
+
+# Aplicar el scaler a los datos
+temperatura_test = temp_test.reshape(-1,1)
+oxigeno_test = oxg_test.reshape(-1,1)
+
+print(temp_test.shape)
+print(temperatura_test.shape)
+
+# Definir los rangos para cada variable 
+scaler_t = MinMaxScaler(feature_range = (0,1))
+scaler_o = MinMaxScaler(feature_range = (0,1))
+# Ajustar el scaler usando los datos de entrenamiento
+input_scaler_t = scaler_t.fit(temperatura_train)
+input_scaler_o = scaler_o.fit(oxigeno_train)
+
+# Aplicar el scaler a los datos de entrenamiento
+train_norm_t = input_scaler_t.transform(temperatura_train)
+train_norm_o = input_scaler_o.transform(oxigeno_train)
+
+
+
+d_test={'oxigeno': test_norm_t.reshape(-1), 'temperatura': test_norm_o.reshape(-1)}
+
+test_norm = pd.DataFrame(data=d_test)
+def prediction(model):
+    prediction = model.predict(data_test)
+    temperatura_pred = prediction[:, 0].reshape(-1,1)
+    oxigeno_pred = prediction[:, 1].reshape(-1,1)
+    temp_pred_inverse = scaler_t.inverse_transform(temperatura_pred)
+    oxg_pred_inverse = scaler_o.inverse_transform(oxigeno_pred)
+    d= {'temperatura': temp_pred_inverse.reshape(-1), 'oxigeno': oxg_pred_inverse.reshape(-1)}
+    df_pred = pd.DataFrame(data=d)
+    return df_pred
+
+
+prediction_gru = prediction(new_model)
+'''
+
+
 
 def prediccion_temp():
 
