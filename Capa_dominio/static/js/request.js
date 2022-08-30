@@ -128,7 +128,7 @@ function mostrarResumen(Xf, Xhr, Yoxig, Ytemp, resumen ){
     var lastOxig = Yoxig[Yoxig.length-1];
     var lastTemp = Ytemp[Ytemp.length-1];
     //Muestrar el  resumen de la información en el cointainer 
-    resumen.innerHTML = lastXf + ' - ' + lastHr + '<br>'  + 'Oxígeno disuelto: ' + lastOxig + ' mg/L' + '<br>' + 'Temperatura: ' + lastTemp + ' °C';
+    resumen.innerHTML = lastXf + ' - ' + lastHr + '<br>'  + 'Oxígeno disuelto: ' + lastOxig.toFixed(2) + ' mg/L' + '<br>' + 'Temperatura: ' + lastTemp.toFixed(2) + ' °C';
 }
 
 function updateChart(d1, d2, label, chart){
