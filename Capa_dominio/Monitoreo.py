@@ -1,10 +1,5 @@
 
 from Conexion import conectar
-''' def ordenar(datos):
-    d_f = sorted(datos, key="F")
-    d_h = sorted(d_f, key="H")
-    return d_h'''
-
 
 def almacenamiento(datos):  
     data=datos
@@ -13,8 +8,7 @@ def almacenamiento(datos):
     tiempo = data["F"]  + ' ' + data["H"]
     #fecha = data["F"]
     #hora = data["H"].replace('.','').replace(' ','')
-    print(oxigeno, temperatura, tiempo)
-    
+    print(oxigeno, temperatura, tiempo) 
     #Iniciar conexión con la base de datos
     con = conectar()
     cursor = con.cursor() 
@@ -28,7 +22,6 @@ def almacenamiento(datos):
     con.close()
 
 def actualizacion():
-    
     con = conectar()
     cursor = con.cursor() 
     consulta = "SELECT * from parametros order by id desc limit 10;"

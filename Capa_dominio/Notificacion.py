@@ -33,7 +33,5 @@ def detectar_condicion(datos):
         resultado.append({'Temperatura': temperatura, 'Fecha': tiempo})
     else:
         print("La temperatura se encuentra en condiciones normales")
-
-
     return resultado
 
