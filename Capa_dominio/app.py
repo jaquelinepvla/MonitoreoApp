@@ -5,22 +5,17 @@ from runpy import run_path
 import numpy as np
 from flask import Flask, jsonify, request, render_template
 from flask import redirect, url_for, flash
-#from Prediccion import actualizacion_prediccion
-#from Usuarios import get_by_id
 from Validaciones import contrasena_val, email_val
-from Prediccion import actualizacion_prediccion
-from Prediccion import prediccion_temp
+from Prediccion import actualizar_prediccion, result_pronostico
 from Usuarios import Usuario
 from Notificacion import detectar_condicion, consulta_email
 from Monitoreo import actualizacion, almacenamiento
 from Validaciones import acceso_val, registro_val
-from flask_socketio import SocketIO
 from flask_mail import Mail, Message
 import json
 from flask_cors import CORS, cross_origin
 
 acceso=False
-#from flask_login import LoginManager, login_user, logout_user, login_required
 
 app = Flask(__name__)
 CORS(app)
@@ -33,26 +28,22 @@ app.config['MAIL_DEFAULT_SENDER']= 'monitoreoapp.service@gmail.com'
 app.config['MAIL_USE_TLS']=True
 
 mail= Mail(app)
-#login_manager_app=LoginManager(app)
 
-#prueba
 #==================================RUTAS=======================================
+# en esta ruta llegaan los datos desde la aplicación movil
 @app.route("/hola", methods=['POST', 'GET'])
 def prueba():
-	
 	msg = request.get_data()
 	#data = msg
 	js = json.loads(msg.decode("utf-8"))
 	#print(js, type(js))
 	for dato in js:
-		print(dato, type(dato))
+		#print(dato, type(dato))
 		almacenamiento(dato)
 		resultado = detectar_condicion(dato)
 		mensaje(resultado)
-		
 
-	prediccion_temp()
-	
+	result_pronostico()
 	return "todo correcto"
 
 @cross_origin
@@ -88,10 +79,11 @@ def graficar_m():
 	"fecha": f_reverse
     }
 	return jsonify(data)
+	
 @cross_origin
 @app.route('/predecir/', methods=['POST', 'GET'])
 def graficar_prediccion():
-	registro = actualizacion_prediccion()
+	registro = actualizar_prediccion()
 	o =[]
 	t = []
 	h = []
@@ -150,11 +142,10 @@ def login():
 		print('el acceso es: ', acceso)
 		if request.path != '/':
 			print('No estas en login')
-			#user=u.get_id()
-			#print (user)
+			
 			print('esto es la ruta', request.path)
 			if  acceso == False:
-				#login_user(u)
+				
 				return redirect(url_for('acceder'))
 		else: print('estas en login')
 
@@ -236,51 +227,3 @@ if __name__ == "__main__":
 	#socketio.run(app, host="https://iotacuicola.herokuapp.com", port=8000, debug=True)
     app.run(debug=True, port=8000)
 
-'''@app.route('/Monitoreo/',  methods=['POST', 'GET'])
-def monitoreo():
-	registro = actualizacion()
-	return render_template('Monitoreo.html', registro=registro)
-
-@app.route('/Prediccion/',  methods=['POST', 'GET'])
-def predecir():
-	registro = actualizacion_prediccion()
-	return render_template('Prediccion.html', registro= registro)
-
-
-@login_manager_app.user_loader
-def load_user(id):
-	return get_by_id(id)'''
-'''======================SOCKETIO==========================
-socketio = SocketIO(app)
-
-@socketio.on('connect')
-def connect():
-	print('connected')
-
-@socketio.on('my event')
-def handle_json(js):
-	print('received json: ', str(js))
-	datos= json.loads(js)
-	print(datos)
-	almacenamiento(datos)
-	resultado= detectar_condicion(datos)
-	prediccion_temp()
-	mensaje(resultado)
-	
-	@socketio.on('disconnect')
-def disconnect():
-    print('Client disconnected')'''
-
-
-
-'''
-from flask import Flask, request
-
-app = Flask(__name__)
-
-@app.route("/")
-def home():
-    return 'Ok'
-
-if __name__ == "__main__":
-    app.run()'''
