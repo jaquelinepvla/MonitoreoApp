@@ -15,7 +15,7 @@ def consulta_email():
         usuarios.append(fila[0])
     print(usuarios) 
     return usuarios
-
+# Detecta si los datos se salen de los rangos establecidos para enviar las notificaciones 
 def detectar_condicion(datos):
     resultado=[]
     d=datos
