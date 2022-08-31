@@ -123,8 +123,7 @@ def acceder():
 		u = Usuario('','', '', usuario, contrasena)
 		acceso = u.acceso()
 		print('datos usuario: ', acceso)
-		#user=u.get_id()
-		#print (user)
+	
 		if  acceso == True:
 			#login_user(u)
 			return redirect(url_for('inicio'))
